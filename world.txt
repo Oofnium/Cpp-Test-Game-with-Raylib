@@ -1,0 +1,237 @@
+# world.txt - the maps and the doors between them. No recompiling needed:
+# save this file, go to the main menu and press R.
+#
+# FORMAT
+#   MAP <name>                      starts a map. Then one line per row of tiles. Then END.
+#                                   (use _ instead of spaces in names, like school_entrance)
+#   WARP <map> <x> <y> <to-map> <x> <y>
+#                                   a door: stepping on tile (x, y) moves you to the other map's tile
+#                                   Tile numbers count from 0 at the top-left. The arrival tile must
+#                                   NOT be a door itself, so put it one step in front of the return door.
+#   START <map> <x> <y>             where a new game begins
+#
+# TILES   #  wall      .  floor      g  grass      r  road
+#         T  tree      x  furniture / obstacle
+# Walls, trees and furniture block you. Every row in a map must be the same length.
+# (Comments are only allowed OUTSIDE a map, because # is also the wall tile.)
+
+MAP apartment
+################
+#..............#
+#.xx...........#
+#.xx.......xxx.#
+#..............#
+#..............#
+#.....xx.......#
+#..............#
+#..............#
+#######.########
+END
+
+MAP neighborhood
+########################################
+#ggggggggggggggggrrrggggggggggggggggggg#
+#ggggggggggggggggrrrggggggggggggggggggg#
+#gTgggggggggggTggrrrgg#######gggggggggg#
+#ggggggggggggggggrrrgg#######ggggTggggg#
+#gggggggggggggTggrrrgg#######gggggggggg#
+#gTggggggggggggggrrrgg#######ggggggTggg#
+#ggggggggggggggggrrrgg#######gggggggggg#
+#ggggggggggggggggrrrggggggggggggggggggg#
+#rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#
+#rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+#rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#
+#ggggggggggggggggrrrggggggggggggggggggg#
+#gg###.####ggggggrrrgg#########gggggggg#
+#gg########gxxgggrrrgg#########gxxggggg#
+#gg########ggggggrrrgg#########gggggTgg#
+#gg########ggggggrrrgg#########gggggggg#
+#gg########ggggggrrrgg#########gggggggg#
+#ggggggggggggggggrrrggggggggggggggggggg#
+########################################
+END
+
+MAP school_entrance
+################################
+#gg##########################gg#
+#gg##########################gg#
+#gg##########################gg#
+#gg##########################gg#
+#gg##########################gg#
+#gg############.#############gg#
+#ggggggggggggg...gggggggggggggg#
+#ggggggggggggg...gggggggggggTgg#
+#ggggTgggggggg...gggggggTgggggg#
+#ggggggggggggg...gggggggggggggg#
+#ggggggggggggg...gggxxggggggggg#
+rggggggggggggg...ggggggggggggggg
+#ggggTgggggggg...gggggggggggggg#
+#ggggggggggggg...gggggggggTgggg#
+#ggggggggTgggg...gggggggggggggg#
+#ggggggggggggg...gggggggggggggg#
+################################
+END
+
+MAP hallway
+##########.#########.#########.#######.#
+#..xxxxxxx..xxxxxxx....xxxxxxx..xxxxx..#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+######.######.#####.############.#######
+END
+
+MAP rooftop
+######################
+#....................#
+#.........xxx........#
+#....................#
+#....................#
+#....................#
+#...............xx...#
+#...............xx...#
+#....................#
+###.##################
+END
+
+MAP garden
+######################
+#gggggggggggggggggggg#
+#gTggggggggggggggggTg#
+#ggggxxxggggxxxgggggg#
+#ggggxxxggggxxxgggggg#
+#gggggggggTgggggggggg#
+ggggggggggggggggggggg#
+#gggggggggggggggggggg#
+#ggggxxxggggxxxgggggg#
+#gTggxxxggggxxxggggTg#
+#gggggggggggggggggggg#
+######################
+END
+
+MAP classroom
+####################
+#..................#
+#...xxxxxxxxxxx....#
+#..................#
+#..x.x.x.x.x.x.x...#
+#..................#
+#..x.x.x.x.x.x.x...#
+#..................#
+#..x.x.x.x.x.x.x...#
+#..................#
+#..................#
+#########.##########
+END
+
+MAP cafeteria
+########################
+#......................#
+#.xxxxx..xxxxx..xxxxx..#
+#......................#
+#.xxxxx..xxxxx..xxxxx..#
+#......................#
+#.xxxxx..xxxxx..xxxxx..#
+#......................#
+#......................#
+#......................#
+#......................#
+###########.############
+END
+
+MAP auditorium
+##########################
+#........................#
+#.....xxxxxxxxxxxxx......#
+#........................#
+#........................#
+#..xxxxxx....xxxxxx......#
+#........................#
+#..xxxxxx....xxxxxx......#
+#........................#
+#..xxxxxx....xxxxxx......#
+#........................#
+#........................#
+###########.##############
+END
+
+MAP band_room
+####################
+#..................#
+#..xxxx.....xxxx...#
+#..................#
+#.....xxxxxx.......#
+#..................#
+#..x..........x....#
+#..................#
+#..................#
+#..................#
+#..................#
+#########.##########
+END
+
+MAP spears_office
+################
+#..............#
+#.xxxx....xxxx.#
+#..............#
+#....xxxxx.....#
+#..............#
+#..x........x..#
+#..............#
+#..............#
+#######.########
+END
+
+MAP science_class
+######################
+#....................#
+#..xxxxxx....xxxxxx..#
+#....................#
+#..xxxxxx....xxxxxx..#
+#....................#
+#..xxxxxx....xxxxxx..#
+#....................#
+#....................#
+#....................#
+#....................#
+##########.###########
+END
+
+# ---------------- doors ----------------
+# apartment <-> neighborhood
+WARP apartment 7 9 neighborhood 6 12
+WARP neighborhood 6 13 apartment 7 8
+# neighborhood <-> school entrance
+WARP neighborhood 39 10 school_entrance 1 12
+WARP school_entrance 0 12 neighborhood 38 10
+# school entrance <-> hallway
+WARP school_entrance 15 6 hallway 19 7
+WARP hallway 19 8 school_entrance 15 7
+# hallway <-> rooftop
+WARP hallway 38 0 rooftop 3 8
+WARP rooftop 3 9 hallway 38 1
+# school entrance <-> garden
+WARP school_entrance 31 12 garden 1 6
+WARP garden 0 6 school_entrance 30 12
+
+# hallway <-> classroom, cafeteria, auditorium (the three doors along the top wall)
+WARP hallway 10 0 classroom 9 10
+WARP classroom 9 11 hallway 10 1
+WARP hallway 20 0 cafeteria 11 10
+WARP cafeteria 11 11 hallway 20 1
+WARP hallway 30 0 auditorium 11 11
+WARP auditorium 11 12 hallway 30 1
+
+# hallway <-> principal's office, science class and band room (doors in the bottom wall)
+WARP hallway 6 8 spears_office 7 8
+WARP spears_office 7 9 hallway 6 7
+WARP hallway 32 8 science_class 10 10
+WARP science_class 10 11 hallway 32 7
+WARP hallway 13 8 band_room 9 10
+WARP band_room 9 11 hallway 13 7
+
+START apartment 3 4

@@ -1,0 +1,2344 @@
+# story.txt - the whole script lives here. No recompiling needed:
+# save this file, go to the main menu and press R, then pick New Game.
+#
+# FORMAT
+#   SCENE <route> <chapter> <npc> <map> <x> <y>   [AUTO]  [REQ:condition]
+#                                   starts a scene. The character stands at tile (x, y) of that map
+#                                   (see world.txt) until you finish the scene. Walk up and press E.
+#                                   route -1 = original story, 0 = Naomi's Route, 1 = Stella's Route
+#                                   AUTO: no E needed. The scene starts by itself when you walk up to the spot.
+#                                   The npc can be Narrator for AUTO scenes: nobody stands there, the spot
+#                                   is just marked on the floor (a tile trigger).
+#                                   With REQ:condition at the end, the scene only appears while that is true.
+#   Name: text                      one line of dialogue
+#   Name (expression): text         same, and the portrait switches to that expression (like annoyed)
+#   ? answer | anonPoints | partnerPoints | reply  [| FLAG: name]  [| REQ: condition]
+#                                   an answer to the line right above it (use 2 or 3 of them).
+#                                   FLAG: switches a story flag on when this answer is picked.
+#                                   REQ: keeps the answer locked until the condition is true.
+#   FLAG: name                      on its own line inside a scene: switches a story flag on when the scene ends.
+#                                   Use it to chain scenes in order: scene A ends with FLAG: a_done, and scene B
+#                                   starts with REQ:flag:a_done, so B only appears after A.
+#   IF condition ... ENDIF          lines between them only play while the condition is true (no IF inside an IF).
+#                                   Use it for story branches: an answer sets a flag, the lines for that branch sit in an IF.
+#   REQ and IF conditions can be joined with &:   REQ:flag:a&!flag:b   or   IF flag:a & anon>=2
+#   An answer with an empty reply (? text | 0 | 0 | ) just carries on with the story; add | FLAG: name to remember the choice.
+#   END                             ends the scene
+#
+# A line spoken by Narrator is shown with no name label (it's Anon's narration / thoughts).
+# A speaker called ??? is a voice you can't place yet. Only plain letters, numbers and punctuation: no curly quotes.
+#
+# CONDITIONS (no spaces inside):  flag:name    !flag:name    anon>=2    partner<1
+#                                 (compare with >=  >  <=  <  ==)
+#
+# Lines starting with # are ignored. Don't use the | symbol inside the text.
+# Rules the game checks for you:
+#   - every chapter (1, 2, 3...) needs at least one scene WITHOUT a REQ, so it can always be finished
+#   - every question needs at least one answer WITHOUT a REQ
+#   - a flag used in a REQ has to be set by some answer or scene (this catches typos)
+
+# ===================== ORIGINAL STORY (route -1) =====================
+
+# ---- Chapter 1 = Day 1 of the original game (script converted from Ren'Py; effects, music and CGs skipped for now) ----
+# One scene per place. Each one starts by itself, and the next one waits for it (FLAG + REQ).
+
+# ---- Day 1, part 1: walking to school in the fog (original script from line 1) ----
+SCENE -1 1 Narrator neighborhood 6 11 AUTO
+Narrator: January sixth.
+Narrator: Year 201M2020 BC.
+Narrator: Volcaldera Bluffs.
+Narrator: Weather conditions; cold as balls.
+Narrator: It's my first time living close to water.
+Narrator: The idea of "marine layer" is new to me, but I do understand morning mist.
+Narrator: This was like it, except infinitely more shitty.
+Narrator: The heavy fog makes navigating to my new school more difficult as I fail to see anything five feet in front of me.
+Narrator: Like a runt of a tree planted in the sidewalk that I swerve to avoid.
+Narrator: It's my first time having to walk to school too.
+Narrator: My new apartment is in an awkward spot. Opposite side of town, yet no school or public bus to take me from there.
+Narrator: It's my first day at a new school.
+Narrator: The second half of the first semester of senior year.
+Narrator: I had six months left at my old school.
+Narrator: I can't even imagine the kind of hell those six months would have been.
+Narrator: But this...
+Narrator: I should take my mind off of it.
+Narrator: I whip out my phone, and consider the best way to make people upset online.
+? Reply to the obvious shill thread | 0 | 0 | The thread goes 404 right as I'm ready to post my well thought-out reply. | FLAG: replied_to_thread
+? Bait the obvious underaged poster | 0 | 0 | The thread goes 404 right as I'm ready to post my well thought-out reply. | FLAG: baited_poster
+Narrator: Better hide my phone before someone sees fit to take it from me, the only human around town. I think.
+Narrator: It's the sounds that reach me first. The chatter of people milling about.
+???: Bro.
+???: It's been too long!
+???: It was only three weeks *giggle*
+Narrator: I can make out the building now.
+Narrator: The fog shrouding gives the school an ominous vibe to it.
+Narrator: I look at the name written on the arch over the entrance.
+Narrator: Volcano High
+FLAG: ch1_walk
+END
+
+# ---- Day 1, part 2: arriving at the school (original script from line 94) ----
+SCENE -1 1 Narrator school_entrance 3 12 AUTO REQ:flag:ch1_walk
+Anon: Perfect setting for a horror game. Or maybe a shitty WAD.
+Narrator: The attempt at humoring myself just made me feel more alone.
+Narrator: A check of my phone says I'm 30 minutes early.
+Narrator: Wonderful.
+Narrator: I move to the entrance, only to see all of the steps occupied by students.
+Narrator: Their eyes turn to me. Expressions of confusion and contemplation.
+Narrator: I can feel their judging stares, the same that had haunted me for four months previous.
+Narrator: I can already picture what they're thinking.
+Narrator: "Dude, check it out!"
+Narrator: "Is that a skinnie?"
+Narrator: "Where's his spear? Aren't they all like, spear chuckers or something?"
+Narrator: "Bet he eats his own kind."
+Narrator: They probably see me as some kind of circus attraction and nothing more.
+Narrator: Ha, I'm the freakshow among this cereal box mascot crowd.
+Narrator: Taking acid is not nearly as colorful as going to Volcano High, I should write that down.
+Narrator: As I write "write that down" on my phone's note app, I noticed the surrounding students stopped looking at me, which is good.
+Narrator: I can peep around the friend circles without a problem now.
+Narrator: Not like I'll ever be a part of one anyway.
+Narrator: ?
+Narrator: Talk about wanting to stand out, I never thought it was possible to look like you were from a black and white twenties cartoon.
+Narrator: She does differ from the other technicolor students though...
+Narrator: ...in the worst way possible.
+Narrator: O-oh yeah. She's staring at me...
+Narrator: ...with that look.
+Narrator: Fucking hell.
+Narrator: Has she never seen a human in her life?
+Narrator: I fucking hate that look.
+Narrator: Contempt.
+Narrator: Judging.
+Narrator: Everyone that has looked at me like that never proved to be anything more than an asshole.
+Narrator: Like I'M the anomaly here. She's just as dumb and insufferable as the rest of them.
+Narrator: She's probably no better than me, miss "my snout is so big I can land a plane on it".
+Narrator: Go back to your friends.
+Narrator: Huh.
+Narrator: She did.
+Narrator: I feel like I should say something.
+Narrator: I notice that all this time my knees were weak and my arms were heavy.
+Narrator: My feet carry me over the soggy grass as I look for somewhere else to be.
+Narrator: On the side of the building is where I find sanctuary.
+FLAG: ch1_arrived
+END
+
+# ---- Day 1, part 3: the garden: meeting Naomi (original script from line 255) ----
+SCENE -1 1 Naomi garden 5 6 AUTO REQ:flag:ch1_arrived
+Narrator: It's a small alcove of sorts.
+Narrator: The pavement is cracked to bits and the shrubs surrounding it are overgrown.
+Narrator: Even the bench, cracked paint on rotted wood held between two concrete legs, matched the "abandoned" vibe of the place.
+Narrator: It was perfect.
+Narrator: I flop down on the wet bench and the violent crack from it makes my heart drop.
+Narrator: Almost perfect but good enough.
+Narrator: I feel a tightness in my chest and my lungs fight to draw air in.
+Narrator: Head in my hands I can fully understand what I've done now.
+Narrator: Six months in a new school.
+Narrator: A year on my own in some rundown apartment in a town I know nothing about.
+Narrator: All on my own.
+Narrator: Three weeks.
+Narrator: It took a day for me to want to change schools, three weeks to make it happen, and now this is my life for the next year.
+Narrator: I think back to my old man's ultimatum.
+Narrator: Once the lease is done, Anon, either college or the service.
+Narrator: I don't care which.
+???: Would you happen to be Anon?
+Narrator: I look up.
+Narrator: The bench broke down.
+Narrator: I lay on the ground, ass hurt from hitting jagged concrete and splintered wood.
+Narrator: Thank god for jeans.
+???: Oh my goodness! Are you okay?
+Narrator: I groan.
+Anon: Never better...
+Narrator: I instinctively apply my "chill guy" facade in the presence of strangers to hide how uneasy I am today.
+Narrator: A hand is held over my face. In my pain addled confusion, I shake it.
+???: Naser!
+Naser: Right, right.
+Narrator: The hand tightens around my own and pulls roughly.
+Narrator: The force is enough for my feet to get under me, stumbling back up to stand before the pair of strangers.
+Narrator: It also felt like enough force to pull my arm out of its socket.
+Anon: Uh... 'Sup?
+Naser: You're Anon, yeah?
+???: I'm glad we found you!
+Anon: ...Who are you guys? Why do you know my name?
+Naomi: Where are my manners! My name is Naomi, student council president and your guide.
+Naomi: It's my sincere pleasure to make your acquaintance Anon!
+Naser: We're your welcoming committee.
+Anon: O-kay then.
+Narrator: Is that really necessary?
+Naomi (explanatory): I had this prepared just for you!
+Narrator: The orange one, Naomi, hands me a brochure.
+Narrator: "Volcano High and You: A New Beginning to Adulthood."
+Narrator: The title alone makes me gag.
+Narrator: The orange one, Naomi, looks at me expectantly.
+Narrator: The brochure is full of the typical trivialities.
+Narrator: College prep, financial assistance, after school programs...
+Narrator: None of it matters.
+Naser (considering): Babe, I've got some things to take care of.
+Narrator: Naser looks back to the school entrance. I follow his eyes and see some people trying to lift a large speaker up the stairs of the school.
+Naomi (sad): O-oh.
+Naomi (sad): I'll see you at lunch, right Naser?
+Narrator: She looks dejected.
+Naser (happy): *chuckles* Of course.
+Narrator: Naser pulls her into a hug and nudges his muzzle against hers.
+Narrator: Is that how dinos kiss?
+Narrator: He leaves, running quickly to assist with the heavy sound equipment.
+Naomi (sad): Ahem.
+Narrator: I turn back to Naomi. She smiles again, though there is a plasticity to it.
+Naomi (explanatory): So, Anon, why did you transfer here?
+Narrator: The question catches me off guard.
+Narrator: I freeze like a deer caught in headlights, scrambling to come up with any plausible answer.
+Narrator: It's an innocent question, she can't have known, could she?
+Narrator: What did mom and pop put in the transfer request form when they shipped my ass here?
+Anon: Uh... I...
+Naomi (considering): You uh, don't have to answer if you don't want to.
+Narrator: I focus my attention on the brochure out of embarrassment.
+Narrator: Lunch! Right! I'm getting kinda hungry!
+Narrator: What about something to eat?
+Narrator: Yadda yadda, herbivore, vegan, tofu, disgusting...
+Narrator: Wait, hold on...
+Narrator: Carnivore line, Filet Mignon-- what the fuck is wrong with this school?!
+Anon: Is there a soup kitchen or something around here?
+Naomi (explanatory): Oh dear... Anon, are you in need of financial assistance?
+Anon: I can figure things out on my own, don't worry too much about it.
+Naomi: Oh, the school here has programs to help its less fortunate students!
+Naomi (happy): The principal here is great, come on, I'll take you to him!
+Narrator: The absolute last thing I want to be doing is asking for handouts...
+Anon: Actually, I--
+Narrator: Naomi grabs my hand and...
+Narrator: ...
+Narrator: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Narrator: ALERT
+Narrator: ALERT
+Narrator: DEFCON LEVEL ONE! DEFCON LEVEL ONE!
+Narrator: FEMALE MAKING PHYSICAL CONTACT
+Narrator: DO NOT PANIC
+Narrator: DO NOT PANIC
+Narrator: GET A GRIP ON THE SITUATION
+Narrator: THIS IS NAOMI.
+Narrator: SHE'S TAKING ME SOMEWHERE BY THE HAND HAND HAND HAND
+Narrator: SHE ALREADY HAS A BOYFRIEND DOESN'T SHE?
+Narrator: WAIT
+Narrator: SHE ALREADY HAS A BOYFRIEND
+Narrator: I AM SAFE.
+Narrator: Okay, okay. Just stay silent and don't make a mess of things.
+Narrator: ......
+Narrator: It's so soft, and smooth, and surprisingly warm for scales.
+Narrator: How lewd.
+Narrator: Day one and I've already fallen to such depraved lows as handholding.
+FLAG: ch1_garden
+END
+
+# ---- Day 1, part 4: the hallway (original script from line 701) ----
+SCENE -1 1 Naomi hallway 19 4 AUTO REQ:flag:ch1_garden
+Naomi: Here we are Anon. Principal Spears should be able to help with your money situation.
+Narrator: Huwhat.
+Narrator: Oh. Right.
+Narrator: Naomi knocks on the door.
+???: State your business!
+Naomi (explanatory): The new student needs financial help, Principal Spears.
+Spears: Lend him a five!
+Naomi: I think he means the loan program, sir.
+Spears: Tell him to come in later, I'm dealing with another student.
+???: --THE FUCKING HELL DO YOU MEAN I HAVE TO CLEAN UP AFTER?!
+Naomi (unimpressed): Tsk.
+Narrator: The orange parasaurolophus' expression quickly changes from... whatever that was to that same smile she's had up until now.
+Naomi (explanatory): Well Anon, why don't I show you to class? Homeroom should be starting soon.
+Narrator: Right. Homeroom. I take out my crumpled schedule from my pocket.
+Narrator: Naomi takes the slip from me.
+Narrator: And blows my eardrums out with a squeal capable of shattering glass.
+Naomi (happy): We share first period and English together!
+Naomi (happy): Come on, I'll introduce you to the class and you'll be able to make all sorts of new friends!
+Narrator: Yay me.
+Narrator: I follow after her to a classroom on the 2nd floor. The seats were being filled with students.
+Narrator: I take one near the front, knowing I'll have to introduce myself. I'll probably be doing that for all my classes.
+Narrator: Fuck my life.
+FLAG: ch1_hallway
+END
+
+# ---- Day 1, part 5: classroom (original script from line 837) ----
+SCENE -1 1 Tsuki classroom 9 3 AUTO REQ:flag:ch1_hallway
+Narrator: The artificial ring of a bell blares from a speaker on the wall. With it everyone waits as the teacher finally enters the room and shuts the door.
+Tsuki: Ohayo gozaimasu curassu. Tudei yu habu e niu curassu-meito tsu Borukeino Hai
+Narrator: What?
+Tsuki: Anon-kun puriizu camu appu zen intorudiusu yooru serfu
+Narrator: Naomi coughs and makes a subtle nod up.
+Narrator: OH!
+Narrator: I stand from my seat and face the class.
+Narrator: Once again all eyes on me and the tightness in my chest returns. I inhale deep, willing my erratic heart to slow.
+Anon: Hey...
+Narrator: Again those eyes, just like three weeks ago.
+Anon: My name is Anon. I uh...
+Narrator: Just like every day for the past four months.
+Anon: I don't really have any hobbies.
+Narrator: I wanted to flee.
+Narrator: Hide away.
+Narrator: Anything to avoid those judging eyes.
+Naomi: What was your old school like?
+Narrator: My throat clenches. I think back again to it all.
+Anon: Uh... I...
+Narrator: There's whispers now.
+Narrator: The hushed tones, silenced snickers, blending with the everpresent stares.
+Narrator: My heart hammers at my chest and I am sure that they all can hear it. See the cold chill racing over me.
+Tsuki: Anon-kun, yuu du natto habu tsu ansaa zattu
+Narrator: His words snap me out of my trance.
+Narrator: Only Naomi was looking at me. The rest were preoccupied.
+Narrator: Either talking about their winter break. Or catching up on sleep.
+Narrator: They've all been ignoring me the entire time.
+Tsuki: Puriizu retaano tsu yo shiito, Anon-kun.
+Tsuki: Hai, nao curassu-
+Narrator: That was nothing like my Japanese animes.
+Narrator: Mr. Tsuki continued on, drawing what little attention there was to himself.
+Narrator: I sat down, finally feeling the blood that had caught in my legs rush up, leaving me lightheaded.
+Narrator: And I probably have to do this for each class today?
+Narrator: Double fuck my life.
+Narrator: Awkward introduction after awkward introduction to classmates that couldn't care less kept me anxious the whole morning.
+Narrator: And there's still the rest of the day to go.
+FLAG: ch1_classroom
+END
+
+# ---- Day 1, part 6: lunch in the cafeteria (original script from line 992) ----
+SCENE -1 1 Naser cafeteria 11 5 AUTO REQ:flag:ch1_classroom
+Narrator: Eventually, lunch comes around.
+Narrator: All the edible stuff is well outside my price range of fucking free, so I settle for a pseudopizza.
+Narrator: The kind that becomes a viable weapon if you leave it alone for ten minutes.
+Narrator: No time to waste after exiting the line, I scan the lunchroom for an open seat.
+Narrator: I thought I had found a decent spot in the corner when disaster struck.
+Narrator: Said disaster was a hand grabbing my shoulder and turning me about.
+Narrator: My plate of pizza shaped cardboard threatened to smear across my shirt.
+Narrator: I fought the momentum of the tray until the hand that had spun me stabilized it and me.
+Naser (explanatory): Whoa there! Nearly dropped your food Anon.
+Anon: Yeah, whose fault is that?
+Naser (explanatory): ...Yours?
+Narrator: I swear to all that is good and holy.
+Naser: Wanna sit with us?
+Anon: What?
+Naser: Wanna sit with Naomi and me? Since you're new and all.
+Narrator: He points to a table where the living pink sugar rush is waving.
+Narrator: God damn it.
+Narrator: I don't want to make a scene.
+Anon: Suuuure...
+Narrator: Before I even sit down, the barrage of questions begins.
+Naomi (explanatory): SO!
+Naomi (explanatory): What do you think of Volcano High?
+Naomi (explanatory): How about your classes?
+Naomi (explanatory): You seem--
+Narrator: I just nod along, starting to not pay attention.
+Naser: You looking forward to the rest of the day?
+Anon: Not really.
+Anon: All these introductions, you know?
+Naser: I get you, hard to talk to people you don't know, right?
+Anon: Something like that, yeah.
+Anon: Hell, last period I tripped in front of everyone. Talk about a first impression.
+Naser (happy): I don't think they'd care too much.
+Naomi (explanatory): Have you had any trouble since then? Do you have enough money for food today?
+Naser: Oh, you're short on food money man?
+Anon: Not really, just got to sign up for some handouts.
+Narrator: Naomi is starting to look disappointed I'm only picking up on Naser's interjections.
+Naser: If you need a bit more extra chow, there's going to be free refreshments at my si-- uh...
+Naser (considering): At Fang's concert after school today.
+Anon: Your what?
+Naser: Fang.
+Anon: Your brother or...?
+Naser: ...Sibling.
+Narrator: What.
+Naser: Fang's gonna have some extra pizzas for the show. You could take some home.
+Anon: I uh... dunno about concerts.
+Anon: Not really one for public events like that.
+Naser (unimpressed): Alright man, just thought you could use a few opportunities to make friends.
+Narrator: What was that?
+Narrator: I'll assume that wasn't meant to be malicious.
+Anon: I'll consider it.
+Naomi (explanatory): Hey! Don't leave me out of the conversation!
+Naomi (happy): How about I help you pick out some cheap food after school?
+Naomi (happy): I know some great vegan shops in the area!
+Narrator: My stomach rolls at the V-word.
+Anon: Maaaaybe another time, sorry.
+Anon: So about that concert Naser?
+Narrator: Dinner and a show? Sign me the fuck up.
+Anon: So what do they play?
+Naser: Music.
+Anon: Music?
+Naser: Yes.
+Anon: What kind?
+Naser: The kind you listen to.
+Anon: Wh-- Well what genre?
+Naser (considering): The good kind?
+Anon: You don't know, do you.
+Naser: Nope.
+Narrator: Well, free food is free food.
+Narrator: I look at my pizza, noticing something is wrong.
+Narrator: I test it with my plastic spork and watch the cheap utensil shatter to bits.
+Narrator: I curse life for a third time today.
+Narrator: The dreaded ten-minute mark has passed, rendering my "pizza" only useful as building material.
+Naomi (happy): Oh dear. Naser why don't you split your sandwich with him?
+Naser (annoyed): But it's my sandwich!
+Naomi (happy): It's fine, we can split my vegan TLT!
+Narrator: Naser shudders and looks at his own footlong philly sub longingly.
+Naser (sad): S-sure thing, babe.
+Narrator: He tears the sandwich in two and hands me the larger half.
+Naser (sad): Here, Anon.
+Narrator: I will never forget your brave sacrifice.
+Narrator: With that we all dig into our meal.
+Narrator: ...
+Narrator: -- After school --
+Narrator: My classes after lunch were the same as before it.
+Narrator: By now I had a rehearsed introduction that only the teacher cared about.
+Narrator: My classmates were disinterested and I would sit down to be forgotten.
+Narrator: I hope the rest of the year is just like that.
+Narrator: I just want to skate through it all.
+Narrator: All that's left for today is the concert. And dinner.
+FLAG: ch1_lunch
+END
+
+# ---- Day 1, part 7: the foyer before the concert (original script from line 1342) ----
+SCENE -1 1 Naser auditorium 11 9 AUTO REQ:flag:ch1_lunch
+Narrator: I wait outside the auditorium entrance with Naser, who was checking his phone for messages.
+Naser (sad): Right, Fang says the show is starting in a bit. See?
+Narrator: Naser turns the screen to me.
+Anon: FWR? Like, Franklin W. Roosevelt?
+Naser (sad): Nah. Fucked-wing retard.
+Naser (unimpressed): Fang's words, not mine.
+Anon: Is your uh... sibling always like this?
+Naser (unimpressed): Fang's....
+Narrator: I wait for him to continue.
+Naser (considering): Well um...
+Naser (considering): I mean, kinda?
+Anon: Glad I'm an only child.
+Narrator: Naser glares at me.
+Naser (angry): Fang's still family.
+Anon: Ah, sorry. Just saying is all.
+Narrator: Naser deflates.
+Naser (sad): You're good, Anon.
+Naser (sad): And yeah, they're family but Fang's just so... so...
+Anon: Difficult?
+Naser (explanatory): YES! Difficult! And I don't know why.
+Anon: Sounds rough.
+Naser (considering): It is.
+Naser (considering): Like, I know sh-- THEY care but Fang doesn't even wanna be around me.
+Anon: Hmmm.
+Narrator: Finally the doors open and I smell the cheesy, heart-clogging goodness within.
+Naser (happy): Sweet. Come on, Anon.
+Narrator: A caveman of a man holds open the door for everyone.
+???: Wait.
+Narrator: His massive hand stops me.
+Anon: A-ah. Y-yes?
+Narrator: I'm guided to the side, away from the crowd that's filtering into the auditorium.
+???: So how are you feeling about our lovely school, Anon?
+Anon: Uh...
+Narrator: It's the spear-shaped pin on his lapel that reads "principal" that informs me of who this giant is.
+Anon: O-oh! It's uh...nice?!
+Anon: Cleaner than my old school.
+Narrator: He guffaws and slaps his chest.
+Spears (happy): You can thank your classmates for that.
+Narrator: What?
+Spears: Now, go enjoy the show.
+Anon: Yes sir.
+Spears: Oh, I do need you to come by my office tomorrow for some paperwork.
+Narrator: I nod and go back to the door where Naser is standing, holding it open for the last of the audience to go inside.
+Narrator: Naser leads me and the large crowd into the shitty school theater.
+Narrator: The foyer has tables with boxes of pizzas stacked taller than me.
+Naser (happy): You can take a couple boxes after, Anon. That should help ya out.
+Anon: Who the hell got all these anyway?
+Naser (happy): I did.
+Narrator: I take a box down from the stack. Others have already started stacking their plates.
+Narrator: I check the logo on the box.
+Anon: And to get so many larges from... "Dino-moe's Pizza"?
+Anon: That's a couple hundred bucks though.
+Naser (unimpressed): Meh, 'bout a month's allowance.
+Narrator: A month? That explains that disaster of a jacket.
+Anon: So about the actual show--
+Naser: I'll check on them. Be right back.
+Narrator: Left on my own I stack my plate up with some quality grease-topped delight.
+Narrator: I lean against the wall, chewing bits of supreme and observing the rest of the crowd.
+???: --nother shitshow--
+???: She's so stupid--
+???: --they even bother?
+???: Bunch of losers--
+Narrator: Everyone seems to share the same sentiment.
+Narrator: So why the hell did they even show up for this?
+Narrator: Naser finally comes back and opens the door to the main hall.
+Narrator: The crowd moves in, though I hang back so I can talk with Naser.
+Anon: What's with them, Naser?
+Naser: What do you mean?
+Anon: The crowd. They were talking mad shit.
+Naser (angry): What?!
+Narrator: Naser grasps at the air unsure what to think or do at the moment. I think he's angry.
+Anon: Whoa whoa.
+Naser (angry): Ugh, I should've known.
+Anon: I don't, what are you talking about man?
+Naser (angry): I brought them here so Fang has an audience.
+Anon: Oh.
+Narrator: Naser's phone rings.
+Narrator: He moves aside to answer it.
+Naser: Fa--
+Narrator: !#&$@*%?!
+Narrator: The voice on the other end is loud and shrill.
+Naser: Yeah I--
+Narrator: &%#$@*%!@#&*%!!
+Narrator: He holds the phone away from his ear to save his eardrum.
+Naser: Okay okay I--
+Narrator: The call ends and Naser sags.
+Naser (sad): I've gotta leave.
+Anon: Seriously?
+Naser (sad): Yeah, Fang doesn't want me here.
+Naser (sad): Said I'll ruin the show.
+Narrator: Harsh.
+Naser: Look, whatever happens promise you won't hold this against them.
+Naser: They're actually a really nice person once you get to know them.
+Anon: Naser why did you just murder the english language in cold blood?
+Narrator: Within I see the rest of the audience, huddled in groups around tiny snack tables.
+Naser (sad): Even went to the trouble of switching out the seats for them. Naomi said it'd help.
+Narrator: With a huff Naser turns away, begrudgingly leaving the auditorium.
+FLAG: ch1_foyer
+END
+
+# ---- Day 1, part 8: the concert (same script chunk, split so you get control back before the show) ----
+SCENE -1 1 Narrator auditorium 11 6 AUTO REQ:flag:ch1_foyer
+Narrator: I enter the hall and take a seat in the back, away from the rest of the crowd.
+Narrator: The lights dim and the curtains are drawn open.
+Narrator: Onstage is a trio of people my age.
+Narrator: I think Fang is the drummer? He doesn't look related to Naser, maybe it is the main front-woman?
+Narrator: That must be Naser's sister.
+Anon: Wh--
+Narrator: Then why the whole confusion over her sex? For fuck's sake.
+Narrator: I'm just getting thrown around today. I don't know.
+Narrator: She looks familiar.
+Narrator: The band doesn't bother introducing themselves.
+Narrator: Instead the purple one begins plucking her bass.
+Narrator: It all went tumbling down from there.
+Narrator: What I thought was a guitar sounded horrifically wrong, far too heavy.
+Narrator: The lead guitarist was using a fucking bass.
+Narrator: And then the vocals kicked in.
+Narrator: Its horrific screeching combined with the amelodious shredding on a bass created a cacophony equal to hundreds of cats ritualistically sacrificed.
+Narrator: I fight the urge to cover my ears.
+Narrator: I don't know too much about music, but even I know that you don't use two basses in one band unless you know exactly what you're doing.
+Narrator: Ooooooh nooooooo.
+Narrator: Ooooooooh God.
+Narrator: What were they thinking?!
+Narrator: I looked back to the crowd to gauge their interest.
+Narrator: Surely I'm not alone in thinking this is an absolute travesty.
+???: PFFFT AHAHAHA THEY STILL FUCKING SUCK!!
+Narrator: The crowd was standing, jeering and laughing with whoever said that.
+Narrator: More words were said but the laughter eclipsed them and the music.
+Narrator: Wait, what happened to the music?
+Narrator: On-stage, the trio looked panicked.
+Narrator: The drummer was inching off stage, while the purple bassist was about to break down into tears.
+Narrator: But the frontwoman stood there. Stood her ground.
+???: FUCK YOU!
+Narrator: She tossed her bass aside, raising both hands and proudly displaying a finger on each of them.
+???: FUCK ALL OF YOU!
+???: NO ONE WOULD WANT TO FUCK YOU, BITCH!
+Narrator: Pffft... That struck a chord with her.
+Narrator: I watch as she grabs her bass and takes the arm of the purple one, rushing off stage with the pink drummer.
+Narrator: Oh God I can't take this, I'm gonna grow a 6 pack from laughing so much, I'm just gonna grab my pizza and leave.
+Narrator: I turn towards the door and see Principal Spears, a fierce glare freezing me in place.
+Spears: Anon.
+Narrator: Oh fuck.
+Narrator: His voice is even more stern than this morning.
+Anon: Yes sir?
+Narrator: He looks to the crowd and then to me.
+Spears: I don't want to hear about any of this come tomorrow.
+Spears: I expect some goddamned maturity from you, Anon.
+Spears: You'll be an adult once you graduate.
+Anon: Uh... Why me though?
+Spears: I've taught many students, and I can tell these things.
+Narrator: His hand lands on my shoulder.
+Narrator: Its grip was firm as it weighed on me.
+Spears: Listen here, Anon.
+Spears: You are not the only person in the world.
+Spears: Everyone's fighting their own battles.
+Narrator: The hand squeezes before pushing me towards the door.
+Spears: I want to see you in my office first thing tomorrow.
+Spears: Now get out of here, this is the only warning that you'll get from me.
+Spears: Next time it will be campus clean-up.
+Narrator: Behind me the principal's voice shakes the room.
+Spears (angry): WHOSE SORRY ASS AM I GOING TO HAVE TO SUPLEX!
+FLAG: ch1_concert
+END
+
+# ---- Day 1, part 9: heading home at sunset (original script from line 2053) ----
+SCENE -1 1 Narrator school_entrance 15 9 AUTO REQ:flag:ch1_concert
+Narrator: Back in the foyer I see some boxes of partially finished pizza left.
+Narrator: I consolidate them all into a pair of boxes and make my exit.
+Narrator: The sun is starting to set now as I make my way home.
+Spears (angry): You are not the only person in the world.
+Narrator: Pfft. Like I don't already know that. There's like...
+Narrator: The classmates that all ignored me today.
+Narrator: Naomi's annoying ass.
+Narrator: That fucking caveman of a principal.
+Narrator: Naser, who's been a bro.
+Narrator: Naser's Sis--
+Narrator: Oh.
+Narrator: Shit.
+Narrator: ...
+FLAG: ch1_home
+END
+
+# ---- Day 2 (the second half of the first script file). The morning choice is a real one: walk to Naser, or go to the principal's office. ----
+
+# ---- Day 2, part 1: the next morning (original script lines 2100-2256) ----
+SCENE -1 1 Narrator apartment 4 5 AUTO REQ:flag:ch1_home
+Narrator: -- The Next Day --
+Narrator: *BLEEP* *BLEEP* *BLEEP* *BLEEP* *BLEEP* *BLEEP*
+Narrator: The bane of all sleep echoes violently by my head, swiftly erasing any traces of slumber.
+Narrator: Still without the energy to turn the alarm off, I stare at the ceiling for a bit, recalling the events of the last few days as an exercise.
+Narrator: The school, if you could call it one.
+Narrator: My new friends, if you could call them that.
+Narrator: That band, if you could call it such.
+Narrator: Great idea Anon, start the day by dissing everything you've done so far in your new life.
+Narrator: No wonder you're so damn popular.
+Narrator: Finally, I lean out of bed and turn the alarm clock off.
+Narrator: I have a good forty-five minutes before I need to be at school -- and it takes twenty to walk.
+Narrator: That leaves twenty-five minutes to get ready.
+Narrator: With practiced movements I execute a proper combat roll from bed, tackling the floor and headbutting it into submission.
+Narrator: With practiced movements I execute a proper combat roll from bed, tackling the floor and headbutting it into submission. My foe defeated, I groan in victory.
+Narrator: My new bed is half the size of what I'm used to.
+Narrator: The hardwood (or is it vinyl?) floor is cold as hell.
+Narrator: From the purview of the floor, I look around my room again.
+Narrator: A tiny, one room apartment with only a computer, bed, television, and fridge.
+Narrator: A whole year in this shithole.
+Narrator: ... Guess I gotta take it one day at a time.
+Narrator: Picking myself up, I slide into today's (and everyday's) clothes and pour myself a bowl of off-brand cereal I picked up the day before.
+Narrator: My eyes scan over my phone while I shovel my sugary breakfast into my mouth.
+Narrator: *Scroll*
+Narrator: *Crunch*
+Narrator: *Scroll*
+Narrator: *Crunch*
+Narrator: Like a poorly-oiled machine until it runs out of fuel with a noisy slurp.
+Narrator: Soon enough, it's time to leave for school. I grab my backpack and slide it over my shoulders.
+Narrator: I take my jacket off the hanger and...
+Narrator: ...
+Narrator: I take off the backpack and put the jacket on.
+Narrator: I approach the grand building, looking to find a place in line between the other students trundling into the front doors.
+Narrator: The halls before class are as crowded as always, with hundreds of students filing in unison towards their homerooms.
+Narrator: By now I was starting to be able to make my way around on autopilot, I've walked the same path twice already after all.
+Narrator: Even after the longest sleep of my life, I still feel miserably tired and ready to crash once again.
+Narrator: I found another entrance at the side of the school that has less students on it. The less the merrier.
+Narrator: I check my clock once again -- I'm early. Fucking hell. Should have shitposted a bit more.
+Narrator: Why am I here so early again?
+Narrator: Think I had to do something.
+Narrator: Oh yeah.
+Narrator: I should talk to Naser. Give him my version of events.
+Narrator: That way he won't kick my ass.
+Narrator: Wait.
+Narrator: Oh goddamn it.
+Narrator: The principal also wanted to see me.
+Narrator: Shit, probably gonna get some demerit or whatever rich schools do as punishment.
+Narrator: I had almost forgotten.
+Narrator: Please Raptor Jesus just let this be the last time I need to deal with stuff like this.
+Narrator: Get it over with so I can finally just slip my way through this year.
+Narrator: (Naser is probably somewhere in the hallway. The principal's office is the door at the far left end of it.)
+FLAG: d2_choice_open
+END
+
+# ---- Day 2, part 2A: find Naser first (you'll be late to Spears) (original script lines 2269-2578) ----
+SCENE -1 1 Naser hallway 33 4 AUTO REQ:flag:d2_choice_open&!flag:d2_on_time
+Narrator: Principal caveman can wait. I want to apologize to Naser about yesterday...
+Narrator: I hope I can be nice to him this time.
+Narrator: Great job, Anon!
+Narrator: He saves you from soy poisoning by sacrificing his footlong, and how do you repay him? By laughing at his sister.
+Narrator: There he is, I hope he's not too busy.
+Narrator: ...
+Narrator: I just realized I don't know what to say to him.
+Narrator: "I wasn't laughing AT your sister, I was laughing WITH the crowd."
+Narrator: No, that sounds bad.
+Narrator: "Weird sisters, amirite?"
+Narrator: I might be retarded. I just told him I'm an only son yesterday.
+Narrator: "Can't help it, dude. Some people just won't amount to anything in life. Sorry."
+Narrator: This isn't time to be edgy, Anon.
+Narrator: As I try and fail to find some way to explain myself to Naser I also fail at actually finding Naser.
+Narrator: How the fuck did I even end up in the tard yard?
+Narrator: After what feels like a space decade of walking, or really just half an hour I find the crippled pteradon being accosted by a VERY pissed off purple midget.
+???: --SAID YOU INVITED ALL THOSE ASSHOLES!
+Naser (explanatory): Wait, Trish, you don't understand--!
+Trish: DON'T CUT ME OFF YOU GRAY PIECE OF SHIT!
+Narrator: Students are clearing out of the way, just trying to get to their classes.
+Narrator: This must be a common occurrence.
+Narrator: The diminutive triceratops, Trish, bows her head and charges Naser.
+Narrator: He just holds a hand out to her forehead.
+Trish (fury): GET YOUR HANDS OFF ME!!
+Naser (handout): Trish, I'm not going to fight you again.
+Naser (handout): The principal's already gotten onto me about the lockers from last time.
+Naser (handout): Believe me, I had no idea the concert would have turned out like that.
+Trish (fury): LIAR!!
+Naser (handout): I just wanted to make sure you guys had an actual audience--
+Trish (fury): WHAT ARE YOU SAYING?!?
+Naser (handout): You know what I mean, come on...
+Trish (fury): Argh!
+Narrator: She stops trying to gore Naser and throws her arms to her sides.
+Trish (angry): Screw you!
+Trish (angry): Even if you weren't trying to mess with Fang!
+Trish (angry): Screw! You!
+Narrator: She stomps off.
+Naser (annoyed): *Sigh.*
+Anon: What was that all about?
+Naomi (considering): Oh, Anon.
+Naomi: Don't worry about it, it's nothing.
+Naser (explanatory): Y'know, girl issues, right? Haha...
+Anon: Sure...
+Anon: Sounds like she was grilling you about the concert.
+Naser (sad): ...
+Naomi (explanatory): Some concert, right?
+Anon: Actually, about that...
+Anon: I, uhh...
+Spears: ANON MOUS, IF YOU ARE NOT IN MY OFFICE WITHIN TEN MINUTES I SWEAR ON MY DEAR FAMILY I WILL PERSONALLY MOUNT YOU ON MY WALL.
+Anon: ...
+Narrator: A layer of cold sweat makes its presence known.
+Naser (considering): It can wait, the office is down this hall on the right.
+Anon: I know the way, but thanks.
+Narrator: Naser waves and heads off.
+Narrator: Guess it's to the principal's office with me. Again.
+Narrator: And thinking about him makes me think about last night.
+Spears: You are not the only person in the world.
+Narrator: Poor Naser, man.
+Narrator: Just wanted to help his sister.
+Narrator: But it's not like he did anything wrong.
+FLAG: late_to_spears
+END
+
+# ---- Day 2, part 2B: find Naser first, continued (original script lines 2579-2704) ----
+SCENE -1 1 Naomi hallway 26 5 AUTO REQ:flag:late_to_spears
+Narrator: Just as I reach the office the sound of clinking glass draws my attention to the apricot asspain and some pink raptor.
+Naomi (angry): Is that contraband, Reed?
+Reed (explanatory): Bro, you've known I'm in a band for like, a year now.
+Naomi (unimpressed): No! Contraband! In your backpack!
+Reed (explanatory): Hmmm... nah, I left my games at home.
+Narrator: Naomi facepalms, or whatever counts as a facepalm with a snout.
+Naomi (unimpressed): Reed! You have a bong in your backpack!
+Reed (explanatory): ... But we aren't in Britain?
+Naomi (unimpressed): Ugh, you're impossible...
+Narrator: Naomi huffs and returns her focus to a stack of papers on the desk, leaving a satisfied raptor in her wake.
+Reed (happy): Heh, works every time...
+Narrator: I need to learn how to do that.
+Reed: S'all 'bout misdirection...
+Narrator: What.
+Reed (happy): Deuces.
+Narrator: The fuck just happened?
+Naomi (explanatory): Oh! Anon, I didn't see you there!
+Naomi (happy): Just in time to finish your paperwork!
+Anon: Paperwhatsit now?
+Naomi (explanatory): Go inside, Principal Spears will finalize it with you now.
+Narrator: Paperwork? What fucking paperwork? I'm pretty sure all that stuff was finished before I even came here.
+Narrator: Whatever. Probably a detention slip or whatever the principal has planned.
+FLAG: d2_branch_done
+FLAG: d2_after_naser
+END
+
+# ---- Day 2, part 2C: straight to the principal's office (original script lines 2706-2880) ----
+SCENE -1 1 Narrator hallway 6 6 AUTO REQ:flag:d2_choice_open&!flag:late_to_spears
+Narrator: Probably best I try and not make the principal pissed at me.
+Narrator: Campus beautification sounds like slave labor. And my arms are strictly for shitposting and gaming.
+Narrator: I try to recall the way that the pomelo primadonna showed me to the office.
+Narrator: I somehow found myself in the potato ranch at the back of the school.
+Narrator: Fuck am I tired already.
+Anon: How the fuck did I end up here?
+???: Don't worry man, it happens to new students all the time...
+Anon: Wha--?
+Narrator: Some pink raptor smelling of very heavily burnt grass surprises me.
+???: If you're looking for the office you're gonna wanna go thataway.
+Anon: Oh-- thanks.
+???: Yeah, no problem, man...
+???: I'm about to go myself, but I forgot something in my locker.
+???: See ya.
+Narrator: He walks off down another hallway.
+Narrator: I should follow the directions he gave me.
+Narrator: Oh wait...
+Narrator: Was that the drummer from last night?
+Narrator: Huh.
+Narrator: As I near the office I can feel a heavy tension suffusing the air.
+Narrator: In front of the principal's office is Naomi and some other chick, engaged in a heated conversation.
+???: Come on, Naomi, there's no reason at all for you to keep us from selling merchandise at school!
+Naomi (unimpressed): Very sorry, Trish, but we've already told you before that due to your friends'... record... we can't allow you to sell on school grounds.
+Naomi (unimpressed): Seven times, in fact.
+Narrator: The purple one, Trish, throws up her hands in frustration.
+Trish (angry): Six! This is the seventh!
+Naomi (unimpressed): Go ahead and fill out a form if you really want to try again.
+Trish (angry): I saw last time you just threw it in the trash without reading it!
+Naomi (angry): It was illegible, Trish. You should work on your handwriting a bit.
+Trish (angry): ARGH!
+Trish (angry): I don't have time for this, I need to go track someone down.
+Narrator: She stomps away, leaving Naomi to deflate a bit.
+Anon: That anything important?
+Naomi (considering): Sorry you had to see that, Anon.
+Naomi (considering): Oh, I didn't notice we were blocking the door from you, my apologies.
+Anon: The principal asked to see me early, I'm not really in any rush.
+Naomi: Very commendable of you, though!
+Naomi: Go right ahead on in.
+Anon: Sure, thanks.
+FLAG: d2_on_time
+FLAG: d2_branch_done
+END
+
+# ---- Day 2, part 3: Principal Spears' office (original script lines 2881-3143) ----
+SCENE -1 1 Spears spears_office 7 6 AUTO REQ:flag:d2_branch_done
+Narrator: I open the door to the cramped office, expecting to see a gruff cave of a workspace.
+Narrator: Instead, it was a fairly well furnished space complete with armchairs and cabinets of old photos.
+Spears: You going to stand there forever? What are you waiting for? Sit.
+Narrator: I plant myself in one of the armchairs and sink a bit lower into the cushion than expected.
+Narrator: Perks of being a human, I guess.
+IF flag:late_to_spears
+Spears: I believe I told you last night to be here first thing this morning.
+Narrator: Shit!
+Spears: Tell me, do I have a stutter?
+Anon: ...
+Spears: Speak.
+Anon: N-no, sir.
+Spears: *sigh...*
+Spears: Take this as a learning experience, Anon.
+Spears: Punctuality gets you far in life.
+Anon: Yes, sir.
+Spears: I let you off the hook last night because you're a new student.
+Spears: I meant what I said last night.
+ENDIF
+IF !flag:late_to_spears
+Spears: Punctual like I asked. I like that, Anon.
+Spears: I trust that what happened last night won't become a recurring problem with you?
+Anon: No, sir.
+Spears: Good. I meant what I said last night.
+ENDIF
+Narrator: Hopefully not about the whole pile driving thing.
+Spears: Still, I didn't bring you in here to lecture you.
+Narrator: He didn't?
+Spears: Not many people have to use the school's financial services.
+Anon: What?
+Anon: Financial services?
+Spears: All the paperwork's done to get you a special lunch card for the semester.
+Spears: You don't have to worry about paying until after graduation.
+Spears: No interest, no down payments, none of that.
+Anon: I uh... What's happening, sir?
+Spears: You signed up for the financial services, correct?
+Spears: Naomi told me you needed help with food and even had the papers filed out.
+Narrator: Naomi?!
+Spears: Allow me to double-check real fast.
+Spears: NAOMI!!
+Narrator: Hello tinnitus my old friend...
+Naomi (explanatory): ...
+Spears: ......
+Naomi (considering): ....
+Spears: .....
+Narrator: Oh god am I stuck like this?
+Spears: --dismissed Naomi.
+Spears: And just to be absolutely clear, Anon did ask you for this, correct?
+Naomi (explanatory): Well, he is in need of assistance, right?
+Naomi (explanatory): Otherwise he's stuck with the budget meals.
+Spears: Anon?
+Narrator: I glance between the two.
+Narrator: It probably wasn't malicious, but still...
+Narrator: I'm not getting involved in office politics today.
+Anon: ... Yes.
+Naomi (happy): Oh, lovely!
+Naomi (happy): Don't hesitate to ask if you have any other prob--
+Spears: You may leave now, Naomi.
+Naomi: Oh! Yes sir!
+Narrator: She leaves the office and Spears clicks the papers on his desk into a stack.
+Spears: Hate to do that, but she goes on for ages.
+Spears: Anyways, go ahead and sign here. Here. Here. Initial here. Date here. Print your name here.
+Narrator: I didn't catch any of that.
+Anon: W-what?
+Spears: Just kidding. You're good to go Anon, and don't forget this.
+Narrator: He holds out the poorly laminated lunch card for me to take.
+Spears: Just keep in mind,
+Spears: As a senior, this semester is your last, your biggest chance to figure your future out.
+Spears: Even if you're new to all of us here at Volcano High, we're here to help you make the most of it.
+Narrator: Huh...
+Anon: Thank you, Mister Spears.
+Narrator: Mr. Spears nods and gives a small smile.
+Spears (happy): You can come in anytime. I'm always here to listen.
+Spears: You can come in anytime. I'm always here to listen. Except for topics relating to estrus season.
+Narrator: I sense great exhaustion in that last bit.
+IF flag:late_to_spears
+Narrator: I thank Mr. Spears one last time and head to homeroom.
+Narrator: ...
+ENDIF
+IF !flag:late_to_spears
+Narrator: I thank Mr. Spears one last time and head out.
+ENDIF
+FLAG: d2_office_done
+END
+
+# ---- Day 2, part 4: finding Naser (only if you didn't earlier) (original script lines 3144-3359) ----
+SCENE -1 1 Naser hallway 30 5 AUTO REQ:flag:d2_office_done&!flag:late_to_spears
+Narrator: Naser should be around here somewhere, I wanted to talk to him before class.
+Narrator: There's still a bit of time before the bell.
+Narrator: But where would Naser be hanging out about now?
+Narrator: Maybe near the cafeteria? This place serves breakfa--
+???: WAOOOH!!
+Narrator: With the screech of a banshee, a blur of purple launches itself onto an unsuspecting student.
+Narrator: Everyone in the hallway pauses to watch as a midget of a triceratops attempts to bring down the taller raptor student.
+???: IMMAKILLYOUTRIGGA!
+Narrator: The student body collectively rolls their eyes and continues on, choosing to ignore the pissed off trigga as she finally forces the helpless guy to the floor and sits triumphantly on his chest.
+Narrator: I'm pretty sure some would pay good money for this treatment.
+Narrator: The ineffectual pummel-slapping included as she flails at the raptor's face.
+Trish (angry): You were there last night weren't you?!
+???: YES, ALRIGHT, I WAS! GET OFF ME YOU PSYCHO BITCH!
+Trish (angry): You owe my band an apology!
+???: WILL IT GET YOU OFF OF ME?!
+Trish (angry): If it's good enough.
+???: ALRIGHT, ALRIGHT, I'M SORRY, JUST GET OFF!!
+Narrator: Wait, she's in the band that played yesterday?
+Narrator: I... Should get out of here.
+Narrator: Last thing I need is whatever's going on here.
+Narrator: I discreetly slip away, down the nearest hall.
+Anon: That happen often...?
+Naser: Does what happen often?
+Anon: WAH!
+Narrator: Naser's leaning against a set of lockers, along with that guy from before.
+Narrator: The other one's making a throat-slashing gesture, waving a palm across his neck.
+Anon (shrug): Uhh... nothing important.
+???: So as I was saying, bro...
+???: BXR, best tactic in the game, y'know?
+Naser (considering): Erm, yeah... Makes sense, I guess?
+Naser (unimpressed): Anyways, Reed. I'm sorry for how things went last night, I didn't think those assholes would laugh at you.
+Narrator: Oh.
+Reed (unimpressed): Nah man, s'cool.
+Reed (unimpressed): They called me because they wanted me to kill bugs crawling on the drums with a couple sticks, I don't know why a bunch of people came there to watch it.
+Naser: Right... And you're absolutely sure Trish is taking it okay?
+Reed: Hell yeah, man. Nothin' goin' on in the Trish department at all.
+Narrator: Reed suddenly reaches into his pocket and retrieves his phone, tapping away at a shockingly long password.
+Reed: Oh, sick! Right, gotta go. Catch you later, amigo.
+Narrator: The raptor bolts before Naser can respond, undoubtedly related to the triceratops.
+Naser: Weird guy.
+Anon: Uh, Naser, I actually wanted to talk to--
+Naser (considering): Crap, can't miss my homeroom today.
+Naser: Sorry, it'll have to wait a bit.
+Anon: It... no, that's fine.
+Anon: See you later.
+Narrator: Naser heads off down the hall and I go to my own homeroom.
+Narrator: ...
+FLAG: d2_after_naser
+END
+
+# ---- Day 2, part 5: after the meeting (original script lines 3360-3417) ----
+SCENE -1 1 Narrator hallway 12 5 AUTO REQ:flag:d2_office_done&flag:d2_after_naser
+Narrator: The periods pass and eventually it's lunchtime again.
+Narrator: I've been focusing a bit less on class, and more on getting a routine down to avoid unwanted confrontation.
+Narrator: It's like it's only me and the teacher in class, phasing out everyone else.
+Narrator: I follow the flow of students towards the lunchroom, mindlessly looking about the halls.
+Narrator: Passing by the athletic awards case, a decent amount of group photos have Naser front and center.
+Narrator: Apparently this school is pretty well known for their track team.
+Narrator: In a similar vein, Naomi is present in a good deal of the photos in the academic achievement case.
+Narrator: The last case was reserved for general awards, I guess trophies that don't belong anywhere else.
+Narrator: The school has a few commendation awards for their efforts to stop bullying.
+Narrator: Feh, they pass those around to every school.
+Narrator: Looking around, there's several posters on the walls here.
+Narrator: All simple slogans to stop the evil bully menace.
+Narrator: A fat lot of good those did me at my old school...
+Narrator: They always went all in with those efforts.
+Narrator: One time they even got the whole student body into the auditorium to watch a short movie.
+Narrator: Some frail, pasty kid gets pestered by a chubby, buff bully.
+Narrator: The kid ended up trying to run away and got hit by a car, with the credits scrolling over a scene in the hospital.
+Narrator: Everyone in class just said things like "Man, good thing I'm not like that bully.", "Yeah, if I ever see a bully like that I'll help the kid!"
+Narrator: Then they went right back to talking about me.
+Narrator: ...No use feeling bad about the past.
+FLAG: d2_post_conference
+END
+
+# ---- Day 2, part 6: lunch (original script lines 3418-3477) ----
+SCENE -1 1 Naser cafeteria 14 5 AUTO REQ:flag:d2_post_conference
+Narrator: I'm here now.
+Narrator: With the lunch card in my possession I'm able to snag something actually edible.
+Narrator: I should run the math on how much I'll end up owing, but I feel more like indulging myself.
+? Grab the cookies you fatass | 0 | 0 |
+? That sandwich looks good | 0 | 0 |
+Narrator: Why not both?
+Narrator: Hence my tray stacked high with desserts and the tastiest looking sandwich from the lunchline.
+Narrator: Looking around for a place to sit I see the aggravating creamsicle waving at me.
+Narrator: Next to her is Naser with a complicated expression.
+IF flag:late_to_spears
+Naser: I just wanted to make sure you guys had an actual audience--
+ENDIF
+IF !flag:late_to_spears
+Naser: I brought them here so Fang has an audience.
+ENDIF
+Narrator: Shit.
+Narrator: I go and sit across from Naser and Naomi.
+FLAG: d2_lunch_a
+END
+
+# ---- Day 2, part 7: lunch, continued (original script lines 3478-3666) ----
+SCENE -1 1 Naser cafeteria 6 5 AUTO REQ:flag:d2_lunch_a
+Naomi (explanatory): I see you're making use of the lunch card.
+Anon: Yyyyeeeaaaaah...
+Naomi (explanatory): But all those sugars! All that is bad for your health, Anon. This school's vegan options--
+Narrator: I tune her out with the help of a crunchy sugar cookie.
+Narrator: A glance at Naser and I notice that he's just poking at his pasta.
+Naomi: Naser sweetie, you shouldn't play with your food.
+Naser: Huhwha-- OH! Anon, what's up?
+Anon: Not much. And you?
+Naser (happy): Yeah no, totally good!
+Narrator: His following laugh sounds hollow.
+Naomi (sad): Naser...
+Naser (sad): Yeah yeah. It's just...
+Naser (angry): Fang stayed home today.
+Naser (angry): The concert was a shitshow and they wanted to avoid everyone. I knew I shouldn't have invited all those guys.
+Narrator: Naomi places a comforting hand on his shoulder.
+Anon: I uh... Yeah...
+Anon: That crowd was harsh.
+Naser (sad): What happened after I left?
+Narrator: Naser looks at me pitifully.
+Naser (sad): Trish gave me a general idea, but I have to know...
+Spears: You are not the only person in the world.
+Narrator: Ah, shit.
+Anon: The band never made it past the first song. Someone said they "still" sucked.
+Narrator: Naser grits his teeth.
+Anon: Whoa whoa, calm down man.
+Naser (angry): What else? Did they say anything about Fang?!
+???: NO ONE WOULD WANT TO FUCK YOU, BITCH!
+Anon: ...Yeah... I don't think you'd want to hear it though...
+Naser (angry): And? What happened after?! I'm gonna kick all their asses!
+Naomi (shocked): Naser! Please calm yourself!
+Narrator: I realize now that I had been laughing with them.
+Anon: I left after that. Principal Spears was fucking pissed.
+Anon: Even threatened to suplex them.
+Narrator: Naser sags, emotionally spent.
+Naser (sad): Haaaaah.... Fuck... So that's why she stayed home...
+Naomi (considering): If Fang wishes to stay home then that is her prerogative.
+Naomi (considering): You just need to give her some time, Naser.
+Narrator: While she said that I noticed a strange expression cross over Naomi's face.
+Naser (sad): I know babe. I just wish I could help them more.
+Anon: Yeah. If you need any help Naser, I owe ya for the pizza.
+Narrator: We finish eating and make small talk until the bell signals us to go to our sixth period.
+Narrator: Day two out of however many left is now out of my way.
+Narrator: I'm fairly certain that if Naser found out I laughed too I'd need to avoid him.
+Narrator: Those cheeto covered claws look like they'd freakin' hurt, man.
+Narrator: With that drama now past me I can just disappear and cheese through the rest of the year like I'm invisible.
+Narrator: Oh when June hits it's gonna be so sweet.
+Narrator: Amen to that.
+Narrator: ...
+FLAG: d2_done
+END
+
+# ---- Chapter 2 = the original's chapter 2 (the fourth day of school) ----
+
+# ---- Chapter 2, part 1: the morning (original script lines 1-89) ----
+SCENE -1 2 Narrator apartment 4 5 AUTO
+Narrator: -- Two Days Later --
+Narrator: Alarm is off.
+Narrator: You know the drill.
+Narrator: Combat roll, head butt, victory screech.
+Narrator: Breakfast, shitposting, clothes.
+Narrator: I'm pretty good at this.
+Narrator: I think I've finally found a decent routine for the rest of the year.
+Narrator: I might have to go easy on the shitposting though, yesterday I might have over indulged...
+Narrator: But...
+Narrator: I've succeeded in turning invisible, not completely but so far I'm happy.
+Narrator: Even the stupid stuff with Naser seems settled, I can just cruise through schooling and shitpost in the evening.
+Narrator: Perfection.
+Narrator: Day four out of however many days are left in the year. So far so good.
+Narrator: It's a bit of a walk, so I get my phone out and start posting on a shitty imageboard.
+Narrator: Baiting people into replying to my posts isn't the most rewarding of hobbies, but it passes the time.
+Anon: >Meteor dodgers / >having jobs / pick one and only one.
+Narrator: That oughtta get a few.
+Narrator: Just before I hit the reply button, I sense the air behind me turn warmer.
+Narrator: A few wildflowers growing in the cracks of the sidewalk bloom in seconds.
+Narrator: She's here.
+FLAG: c2_morning
+END
+
+# ---- Chapter 2, part 2: outside the school (original script lines 90-169) ----
+SCENE -1 2 Narrator school_entrance 3 12 AUTO REQ:flag:c2_morning
+Naomi: Good morning Anon!
+Anon (sad): It could have been.
+Narrator: Naomi catches up to me.
+Naomi (explanatory): You say something?
+Anon: Good morning.
+Anon: Don't you walk with Naser to school? Where is he?
+Naomi (sad): ...He went early today to help set up another student event.
+Anon: Oh. He's certainly someone you can count on for that.
+Naomi (happy): He really is! I'm so proud of him!
+Anon: Yeah...
+Naomi: Umm... Anon, have you seen our lovely award-winning school gardens yet?
+Anon: Gardens win awards?
+Naomi: They do! Come on, I'll show you.
+Anon: Actually, wait, I don't really wan--
+Narrator: Naomi grabs my hand again and when I come to, we're already there.
+FLAG: c2_arrived
+END
+
+# ---- Chapter 2, part 3: the garden (original script lines 170-333) ----
+SCENE -1 2 Naomi garden 5 6 AUTO REQ:flag:c2_arrived
+Naomi: And here they are, our school's flowerbeds!
+Naomi (explanatory): Aren't they just magnificent?
+Anon: Please stop dragging me by the hand.
+Narrator: She is right though, the gardens here are absolutely stunning.
+Narrator: I can't tell what's more colorful, the bushes of flowers, or the students that tend to them.
+Anon: Yeah, the gardeners here do a great job.
+Naomi: Hm? Oh, yeah, you can thank the gardening club for that.
+Narrator: Naomi guides me through the gardens, occasionally giving tour trivia.
+Narrator: I can't shake the feeling something's on her mind, though.
+Naomi (explanatory): And here's where the freshmen planted flower seeds at the start of the school year!
+Naomi (explanatory): By the end they'll bloom wonderfully...
+Naomi: ...
+Naomi (sad): And then the... Uh...
+Narrator: What's going on here?
+Narrator: Is she coming onto me?
+Narrator: I want to ask if she's upset about something, but is that even right of me to do?
+? Ask what's up | 0 | 0 | | FLAG: naomi_asked
+? Not my place to pry | 0 | 0 | | FLAG: naomi_stayed_out
+IF flag:naomi_asked
+Anon: You alright?
+Naomi (sad): Hm?
+Anon: Something's bothering you, right?
+Naomi (sad): Not really... A bit, I guess...
+ENDIF
+IF flag:naomi_stayed_out
+Narrator: Nah, I don't know her that well.
+Narrator: If it's something personal Naser can help her with it.
+Naomi (sad): I'm sorry, I've been a bit stressed lately, Anon...
+ENDIF
+Naomi (sad): I've just been worried about Naser recently...
+Anon: Something wrong with him?
+Naomi (sad): No, nothing's wrong...
+Naomi (sad): It's more that he worries a bit too much for that... sister of his.
+Naomi (sad): Oftentimes when I'm with him, he's anxious about something she's done.
+Naomi (sad): I'd just like him to relax about it a bit more, I suppose.
+Naomi (sad): Is that selfish of me to say?
+Anon: I mean...
+Anon: I've never had a girlfriend, but I imagine that it'd be a bit inconsiderate to constantly be worried in front of her.
+Anon: I dunno.
+Narrator: Naomi nods her head a bit, staring at her shoes.
+Naomi (sad): Sorry, I just wanted to share with someone.
+Naomi (sad): Guess I ended up doing the same thing I'm complaining about here, huh?
+Anon: Don't sweat it.
+Narrator: She checks her phone and jumps a bit.
+Naomi (sad): Oh! I'm going to be late!
+Naomi (sad): I still need to check in at the front desk...
+Naomi (considering): Really sorry, Anon, but the tour will have to end here.
+Anon: It was fine, hopefully it just doesn't make my allergies flare.
+Narrator: She waves and runs off to a side door.
+Narrator: I should be getting to homeroom soon, too.
+FLAG: c2_garden
+END
+
+# ---- Chapter 2, part 4: the hallway (original script lines 334-511) ----
+SCENE -1 2 Fang hallway 14 4 AUTO REQ:flag:c2_garden
+Narrator: I push open the usual side entrance I take and enter the hallway that's starting to become familiar now.
+Narrator: Still occasionally glancing at the room numbers just to make absolute sure, I noticed someone in the countercurrent walking past.
+Narrator: It was one of the bass players from the concert two days ago.
+Narrator: Naser said she was his sister, right?
+Narrator: Glancing at her for a moment, the expression on her face sort of reminds me of something.
+Narrator: It was probably just leftover embarrassment from the concert, but she seemed to have a lost look on her face.
+Narrator: Or maybe it was confusion.
+Narrator: Or a mix of the two...?
+Narrator: Either way there's something on her mind.
+Narrator: I can't help but think that that must be how I looked on my first day.
+Narrator: But it was my first day of school, she had been going here all year.
+Narrator: What's her excuse then?
+Narrator: Either way, doesn't look like she recognizes me.
+Narrator: Objective one out of whatever of the current year is accomplished then, next one is memorizing the class schedule.
+Narrator: And that says it's home room in fifteen minutes.
+Narrator: Home room which I share with Naomi.
+Narrator: *shudder*
+Narrator: She's just too...too sweet... and like... obnoxious...
+Narrator: Ugh, I can't find the right way to put it, but she feels so... movie-like...
+Narrator: Like an act.
+Narrator: Day four, Anon. Day four.
+Narrator: What the hell?
+Narrator: Why is she scratching herself?
+Narrator: Is she a junkie?
+Narrator: OH GOD DON'T COME ANY CLOSER.
+Narrator: I DON'T WANNA GET SHANKED BY A JUNKIE PTERODACTYL.
+Fang: You... uh... SKINNIE.
+Anon: Y-yeah?
+Fang: Did you see where they went?
+Anon: ...
+Fang: The group with the uh...
+Fang (considering): uhhh...
+Anon: Dinosaurs?
+Fang (unimpressed): No! Yellow hoodie, red hair, pink tail, hair buns...
+Anon: Are you describing one person?
+Fang: What? No!
+Fang: It's multiple!
+Anon: They're dinosaurs though, right?
+Fang (angry): WHAT?
+Anon: I don't know where they went!
+Fang (unimpressed): uuuuuuughhhhhh
+Narrator: And just like that, she's gone.
+Narrator: I seem to have this effect on women.
+Narrator: I call them poison pheromones.
+Narrator: But it is relieving that she didn't recognize me. Guess Naser didn't tell her.
+Narrator: The staccato of the bell signals my tardiness for class.
+Narrator: My class with Naomi.
+Narrator: If there is a Jurassic God, please make Naomi miss home room today.
+Narrator: I'll even offer a goat sacrifice!
+Narrator: ...
+FLAG: c2_hallway
+END
+
+# ---- Chapter 2, part 5: science class, first lab (original script lines 512-687) ----
+SCENE -1 2 Fang science_class 8 8 AUTO REQ:flag:c2_hallway
+Narrator: The day passes uneventfully until fourth period, Science Class.
+Narrator: I find a seat near the back of the room and watch the clock hands tick down the remaining few seconds to the bell.
+Narrator: Right before the tone, one last student rushes in, out of breath.
+Narrator: Oh, it's that girl again. I guess we shared a period or two on the first day and I just didn't notice.
+Narrator: She strides across the room, taking her seat without a word.
+Narrator: Strangely, nobody seems to acknowledge her. Not even a sneer or chuckle.
+Narrator: That's odd.
+Narrator: Given how many people were there that night, you'd expect at least a couple of snickers.
+Narrator: But there she was, being completely left alone... Or ignored.
+Narrator: Seems almost worse than getting laughed at.
+Narrator: The lingering chatter in the room dies out as the teacher stands from his desk, moving to the front of the room.
+Dr. Fernsworth: Good news everyone!
+Dr. Fernsworth: Today we'll be having a lab on magnetic fields.
+Dr. Fernsworth: Find a partner and get prepared.
+Narrator: My heart sunk as those dreaded words passed my ears.
+Narrator: "Find a partner."
+Narrator: I know it's pointless, but I at least have to try. Maybe someone was out sick.
+Narrator: With my luck though, I'll probably just end up with that fossil of a teacher.
+Narrator: With everyone else already starting on the assignment I resign myself to working twice as hard.
+Dr. Fernsworth: Hurry up Mr. Anon, your partner is waiting for you.
+Narrator: ...What?
+Dr. Fernsworth: Very well.
+Dr. Fernsworth: Fang, if you would be so kind to sit next to your new partner.
+Narrator: I sat in momentary confusion as someone took the seat next to mine.
+Narrator: SPAGHETTI ALERT!! SPAGHETTI ALERT!!
+Narrator: DEFCON LEVEL TWO
+Narrator: THERE IS A FEMOID WITHIN ARMS DISTANCE LOOKING AT ME
+Narrator: DEPLOY ALL SPAGHETTI LOCKDOWN MEASURES
+Fang: 'Sup.
+Anon: Thanks, you too.
+Narrator: SHIT! RECOVERY MANEUVERS NOW!
+Anon: I mean, hey. Not much. You?
+Narrator: CHAD RECOVERY SUCCESSFUL.
+Fang: None of your business. Just do the damn assignment and don't bother me.
+Anon: O-oh. You upset right now or something?
+Fang (unimpressed): What was your first fuckin' clue.
+Fang (unimpressed): Last time I'll say it, just do the assignment and don't. Bother. Me.
+Narrator: Okay! Got to keep coolheaded.
+Anon: So this assignment, then.
+Narrator: With that we open our books and start on trying to decipher who Lorentz is and why his force is magnetic.
+Narrator: Things are going well for the first few questions, I remember a bit of it from that one time I tried to make a railgun.
+FLAG: c2_sci_a
+END
+
+# ---- Chapter 2, part 6: science class, second lab (original script lines 688-892) ----
+SCENE -1 2 Fang science_class 14 8 AUTO REQ:flag:c2_sci_a
+Dr. Fernsworth: How are you two doing so far?
+Fang (considering): We're... Fine, Dr. Fernsworth.
+Dr. Fernsworth: I see, and you Anon?
+Anon: Yeah what she said.
+Narrator: Why is Dr. Fernsworth making that face?
+Narrator: I turn to Fang to ask her what the deal is and--
+Narrator: Oh.
+Dr. Fernsworth: Oh dear.
+Narrator: Mistakes have been made.
+Fang (angry): She?
+Anon: ...Yes?
+Fang (angry): Can you not see?!
+Narrator: Oh Raptor Jesus almighty this is the absolute worst case scenario.
+Narrator: The infuriated pteradactyl's wings spread wide and her taloned finger jabs my chest.
+Fang (angry): I. Am. Non. Binary.
+Narrator: How was I supposed to know something so trivial would set something like this off?!
+Fang (angry): Well?!
+Anon: ...
+Narrator: I can't bring myself to say anything!!
+Fang (angry): Oh, OH, so that's how it's going to be, huh?!
+Dr. Fernsworth: Fang...
+Fang (very angry): YOU THINK YOU CAN JUST SPIT IN MY FACE AND THEN-- AND THEN GIVE ME THE COLD SHOULDER?!
+Fang (very angry): I'LL HAVE YOU KNOW--
+Dr. Fernsworth: FANG.
+Narrator: It feels like the world just stopped.
+Narrator: All eyes are on Fang.
+Narrator: And in Fang's eyes I see something flash briefly.
+Narrator: Judging by those exaggerated movements and the eloquent speech, this is something Fang had been practicing.
+Narrator: This was supposed to be a big moment where she stopped an evil bigot and the whole class would clap.
+Narrator: In all her planning and practice Fang had made one crucial error.
+Narrator: Nobody cared.
+Dr. Fernsworth: Please consider stepping into the hall for a moment.
+Narrator: Sh- Fang is quick to exit the room.
+Narrator: Dr. Fernsworth turns a sympathetic look towards me.
+Dr. Fernsworth: Forgive them, Anon, you must understand that Fang is... experiencing issues.
+Narrator: What the fuck just happened...?
+Narrator: Well, she blew up at me when I called her a she...
+Narrator: She was already upset about something before...
+Narrator: She was upset before because of the concert the other day?
+Narrator: Looks like I just pushed her over the edge.
+FLAG: c2_sci_b
+END
+
+# ---- Chapter 2, part 7: science class, third lab (original script lines 893-1094) ----
+SCENE -1 2 Fang science_class 11 4 AUTO REQ:flag:c2_sci_b
+Narrator: After a few moments Fang comes back in and sits down without a word.
+Fang (sad): ...Sorry.
+Anon: Uh, don't worry about it.
+Narrator: .
+Narrator: ..
+Narrator: ...
+Narrator: Now that I think about it, something's off.
+Narrator: Fang claims to not be male or female, but the clothes she's wearing are clearly provocative.
+Narrator: It's almost like she's showing off her femininity.
+Narrator: Then why?
+Narrator: Why would someone be wearing revealing clothes in contradiction to their identity...?
+Narrator: It's almost like they're just looking for attent--
+Narrator: Then suddenly, it hits me.
+Narrator: I recall memories of a slightly younger Anon, running around school with a cape, pilot goggles...
+Narrator: ...And three plastic katanas.
+Narrator: That was a quick way to get sent to the principal's office.
+Fang (angry): ...Are you even listening to me?!
+Anon: Dowhatnow? Wasn't paying attention.
+Fang (considering): Yeah, I could tell.
+Narrator: She mutters as she turns back to the assignment.
+Fang (unimpressed): Uh.... You've been staring at me for the past 5 minutes. Freak.
+Narrator: Judging by the looks of the class, and both of our current social standings, we'll probably be working together a lot more.
+? Sorry for calling you a girl... | 0 | 0 |
+? Sorry Fang I should have known from your feminine appearance and dress that you are, in fact, non-binary... | 0 | 0 |
+Fang (unimpressed): Non-binary people don't owe you androgyny.
+Narrator: Doesn't seem like it's something she wants to hear right now.
+Anon: So um, you're Naser's sister, right?
+Fang (angry): SIB-ling.
+Anon: R-right. Sorry.
+Fang (angry): ...
+Narrator: There's a brief pause until Fang speaks up again.
+Fang: Yes. Naser's my baby brother, why do you ask?
+Anon: I was just curious, Naser has been helping me settle into the school.
+Fang: Of course he did. Just wish he'd keep out of my fuckin' business for two seconds.
+Anon: Uhh... Sure.
+Narrator: Actually, thinking about Naser...
+Naomi (considering): "It's more that he worries a bit too much for that... sister of his."
+Naomi (considering): "Oftentimes when I'm with him, he's anxious about something she's done."
+Anon: ...He told me about what happened the other day.
+Anon: Sorry to hear something like that happened to you and your band.
+Fang (considering): ...
+Fang: What do you care?
+Anon: I... dunno.
+Narrator: Suddenly my shoes seem more interesting than the conversation at hand.
+Anon: Just think it's messed up people would go to a show just to laugh at you.
+Fang: Feh.
+Fang (happy): Guess you aren't that awful...
+Fang: Unlike every other guy in this school.
+Anon: ...
+Narrator: The rest of the period passed between continued small talk with Fang.
+Narrator: She seemed to be controlling the conversation though.
+Narrator: When the bell rings, Fang whips out her phone and immediately starts tapping away.
+Anon: You going to your next class?
+Fang (unimpressed): Who cares about being late?
+Anon: Fair. See you then.
+Narrator: She lazily waves a hand at me and I make my way to my next class.
+Narrator: Unfortunately, fifth period is mathematics.
+FLAG: c2_sci_c
+END
+
+# ---- Chapter 2, part 8: the classroom (original script lines 1095-1548) ----
+SCENE -1 2 Trish classroom 16 7 AUTO REQ:flag:c2_sci_c
+Narrator: I'm barely keeping myself awake while Mr. Carlesiidewski is giving a lecture on the inverse of tangents.
+Carl: ANON!
+Narrator: I sit ramrod straight at the direct address.
+Carl: Are you frickin' listening? Come finish this frickin' problem on the frickin' board.
+Narrator: Just one social disaster after another today.
+Narrator: Hesitantly, I slide out of my chair and trundle my way to the whiteboard, trying to decipher the runes I'm expected to make sense of.
+Narrator: Only I never made it to the whiteboard.
+Narrator: Three rows down and my foot catches on a loose backpack strap in the aisle.
+Narrator: Luckily I fell sideways and there was a cold hard desk in the way to catch my fall.
+Narrator: To the chuckles of the rest of the class, I look up from my final resting place to see a massive pink and white muzzle.
+Reed: Dude.
+Narrator: Like a deer caught in headlights, I can only stare and wait for him to continue.
+Reed: You're on my desk man...
+Narrator: My senses return to me, and I quickly get up, picking up and returning the pencil that flew to the floor in a flurry of apologies.
+Narrator: Then I recognise just whose desk I fell on.
+Narrator: It's that drummer in Fang's band.
+Narrator: Don't I just have the luck of the devil?
+Narrator: Giving one last apology, I head to the front of the room to solve the whiteboard problem.
+Narrator: I tried solving the problem to the best of my ability.
+Narrator: Still took a solid two minutes.
+Narrator: After circling my answer, I look expectantly at Mr. Carlesiidewski who gives a nod.
+Narrator: Finally turning around to return to my seat, I freeze.
+Narrator: Right there in the front row is the last member of the band, Trish.
+Narrator: I stumble back to my desk.
+Narrator: Mr. Carlesiidewski gives each row a stack of papers to pass back.
+Carl: Alright, here's the frickin' homework covering today's lesson. Use page two-seventy-nine.
+Carl: I'll give you the last...
+Carl: Fifteen frickin' minutes of class to work with your frickin' peers.
+Narrator: Mr. Carlesiidewski returns to his desk and pulls out a math book with a monthly romance novel crudely stuffed inside it.
+Narrator: With a very detailed centerfold, by the way he turned it sideways.
+Narrator: Looking ahead to Reed's desk, he's been joined by Trish who's trying to get him to get started.
+Narrator: I think I can feel their eyes following me...
+Narrator: Back at my desk, I glance over the math sheet.
+Narrator: Page two-seventy-nine, right?
+Narrator: Looks like I finally get to use that phonebook of a math textbook.
+Narrator: ...Where is it?
+Narrator: I open my backpack, and instead of my math textbook...
+Narrator: ...is the Saturnia Collectors Edition Art-book I splurged on yesterday.
+Narrator: I'm frozen.
+Narrator: Can't move an inch.
+Narrator: Did I grab the wrong book this morning?
+Narrator: Is someone playing a sick joke?
+Narrator: How could I bring this to school?!?
+Narrator: Something bounces off my head and lands on my desk.
+Narrator: It's enough to snap me back to reality and I shove my backpack under my desk, furiously zipping it.
+Narrator: On my desk is a balled-up wad of paper.
+Narrator: Oh great. I was hoping to avoid these chain notes.
+Narrator: I unfurl the ball to read the note.
+Narrator: Look up.
+Narrator: I look up and see the purple one waving me over.
+Narrator: Fuck.
+Narrator: Grabbing my stuff I shuffle over slowly to the duo.
+Reed (explanatory): Sup compadre.
+Anon: Uh... Sup?
+Trish (explanatory): See? He's my class partner so I look out for him.
+Trish (explanatory): How are YOU looking out for your class partner, Anon?
+Trish (explanatory): Enforcing the social contract, having good conduct and mutual respect so you can leave class and go on with your life?
+Anon: Uh.... what's this about?
+Trish (unimpressed): A certain friend of mine is partnered with you in Science, right?
+Narrator: Wait. Oh!
+Anon: You mean Fang?
+Trish (unimpressed): They just messaged me before class, said they had to be partnered with a skinnie bigot -- then proceeded to show them.
+Trish (smug): I had a feeling you'd be him.
+Narrator: Am I gonna have to tolerate humiliation from these meteor dodgers too?
+Narrator: My head is starting to hurt. Hopefully we can just get started on these math exercises.
+Anon: Yeah, that was me. I apologized, though.
+Trish (happy): I know and I appreciate it.
+Trish (happy): I'm Trish and this is Reed. We're Fang's best friends.
+Anon: Uh-huh.
+Trish (smug): What about you? Now you tell us about yourself.
+Narrator: RED ALERT.
+Narrator: There is no way I'm telling anyone, especially these people.
+Narrator: And if they find out where I was a few days ago...
+Anon: Uhh... I'm Anon and I'm a human. I got here Monday.
+Anon: That's all.
+Trish: We know that.
+Trish: We want to know where you're from, what you've been doing since you got here, if you have any friends...
+Anon: I-I've been doing nothing. I don't really care about friends.
+Narrator: She doesn't look very convinced by that answer.
+Trish: Right.
+Reed (explanatory): You know that Naser dude, right...?
+Trish (unimpressed): Hey... Yeah, I saw you with that slut Naomi earlier, too...
+Narrator: Trish squints her eyes at me.
+Anon: T-they were my welcoming committee, they helped me with getting settled, nothing besides that.
+Trish (explanatory): Riiiiight. Didn't Naser or Naomi invite you to anything... or...?
+Anon: No. I don't remember.
+Anon: I've been trying to get them off my back. But w-why you ask?
+Trish: We had a concert last week, Naser and Naomi invited a whole bunch of assholes to ruin it.
+Trish (considering): Suppose if we had seen a human in that crowd we would remember, right?
+Anon: Y-yeah. Haha.
+Anon (shrug): I-I mean, concert?
+Narrator: I don't think they invited me here to solve math problems.
+Trish (explanatory): We have a band. I'm the lead bassist, Fang's the vocalist and secondary bass, and Reed is the drummer.
+Reed (happy): ...And the songwriter.
+Trish (smug): He just comes up with the funny song titles.
+Anon: Uhhh... that's very neat! Would love to listen to your band someday.
+Narrator: I drag my chair backwards and clumsily rise from my seat.
+Anon: It was great meeting you guys, I'll be going back to my desk, though...
+Trish: Wait, I'm not done with you yet.
+Anon: What? I really should get started on the homework...?
+Trish: It's important. Look at me.
+Narrator: She has a very serious look on her face.
+Narrator: She's not saying anything, her glaring through the back of my skull makes me think she means business.
+Trish: Fang is happy.
+Trish: They found something about themself they finally like, and I helped them through a dark time. They made up their mind.
+Narrator: They? Themself? No wonder Naser seemed so confused by this.
+Trish: They don't need people in their life that might hurt or confuse them.
+Trish: They have us, and the band. We're trying to make it for ourselves.
+Anon: O...kay?
+Trish: I look out for them because I care for them. They've been hurting because of those dicks, I'm doing my part in assuring them.
+Narrator: Was that what I saw her doing earlier?
+Narrator: Looked more like a one trigga trig-out.
+Anon: I don't understand.
+Trish: My point is, don't upset Fang.
+Narrator: I just wanted to solve math problems.
+Anon: I, er... yes, ma'am.
+Narrator: Once again she's just glaring at me.
+Narrator: Fucking hell my stupid legs, stop shaking.
+Narrator: I'll take this opportunity.
+Anon: Uh... thank you for the lesson, Trish. I'll keep that in mind. See ya.
+Reed (explanatory): Wait man-- you want this?
+Narrator: Reed holds out a sheet of paper.
+Narrator: Wait, it's a copy of the homework assignment--
+Narrator: And it's complete?!
+Anon: Hold on, I thought you were the one needing help?
+Reed (considering): Shhhh, the friend of my friend who's the friend that helps me is also my friend too.
+Anon: I don't think that's how the saying goes...?
+Reed (explanatory): You're sharp, Anon. Razor sharp.
+Reed (explanatory): Friends?
+Narrator: The bell announces lunchtime, and the rest of the students collectively rise and start shuffling out the door.
+Anon: Lunch hour, been a blast talking to you guys.
+Narrator: I swiftly snatch up the backpack by my leg, flashing an earnest sympathetic smile at them -- or at least I thought it was one.
+FLAG: c2_class
+END
+
+# ---- Chapter 2, part 9: the hallway (original script lines 1549-1646) ----
+SCENE -1 2 Narrator hallway 10 5 AUTO REQ:flag:c2_class
+Narrator: As I power walk out of the classroom I swear I caught a glimpse of Reed waving goodbye.
+Narrator: A shame I have other places to be. Namely away from the pissed off midget.
+Narrator: Sorry man, you seem like a good guy. But with that tiny tyrant?
+Narrator: Not in this lifetime.
+Narrator: That was the worst fucking experience in a long while. Almost as bad as actually dealing with Fang in class.
+Narrator: Here I was thinking I could be invisible for the rest of the year.
+Narrator: ...And now I have classmates talking about me behind my back on their phones, probably for the rest of the school year.
+Narrator: At least it's the best period of the day now.
+Narrator: Wonder what to get for lunch today...
+Narrator: Wait.
+Anon: What's that smell?
+Narrator: Oh no.
+Narrator: I duck into a corner and rip the backpack open.
+Narrator: What should have been my lunch card, binders, and horrendously embarrassing art book...
+Narrator: Was instead a half dozen glass flasks, bags full of... something, and all sorts of machinery I didn't recognize.
+Narrator: Someone... someone else has my backpack... and that book.
+Narrator: If they see...
+Anon: ...
+Narrator: This backpack...
+Narrator: It's from the Reed guy, I'll bet.
+Narrator: When I rushed out of class...
+Narrator: Fuck me.
+Narrator: On the other hand...
+Narrator: I could get a medal of honor for turning all this stuff in...
+Narrator: Think you can even get a bit of cash for reporting stuff like this.
+Narrator: ...What am I thinking?
+Narrator: Any amount of money is NOT worth my power level being revealed.
+Narrator: I can't ruin my life.
+Narrator: Not again.
+Narrator: Especially not with these losers.
+Narrator: A half-hour until lunch period ends. Good.
+Narrator: I need to find Reed.
+Narrator: I double back to the classroom I just left and find it empty.
+Narrator: Fuck.
+Narrator: Maybe he's getting his lunch now. Cafeteria then.
+FLAG: c2_hall2
+END
+
+# ---- Chapter 2, part 10: lunch (original script lines 1647-2049) ----
+SCENE -1 2 Reed cafeteria 6 5 AUTO REQ:flag:c2_hall2
+Narrator: I sprint through the school hallways, already familiar with the layout, looking for the drug dealer.
+Narrator: The colorful crowd in the lunch line makes it difficult to pick Reed out, so I have to carefully scan the room.
+Narrator: I finally spot the pink raptor at the end of the queue, tray in hand and incriminating evidence on his back.
+Narrator: The world must be fucking with me since I'm the one currently carrying a mini-cartel in a backpack.
+Anon: REED!
+Narrator: The stoner drummer turns my way as I try as calmly as possible to approach him.
+Reed (explanatory): What up, my guy?
+Anon: I uh...
+Narrator: I give the backpack a bump, causing all the dubious glassware within to clink.
+Anon: Think you got my backpack, Reed.
+Reed: Huh... Was wonderin' why this felt lighter.
+Narrator: He holds out my backpack to me.
+Reed: 'Ere ya go, man.
+Narrator: We trade backpacks, I'm careful to hand his over while simultaneously examining mine still within his grip.
+Narrator: It doesn't look like he opened it at all but...
+Anon: Thank fuck...
+Reed (explanatory): Why're you so worried bout the bag, man?
+Narrator: Shitfuckfuckfuckfuck.
+Anon: Becaaaauuuuuse...
+Narrator: Don'tbringuptheartbook.
+Narrator: Think you dumbfuck, there's gotta be something you can say--
+Narrator: Naomi I owe you a fruit basket!
+Anon: My lunch card!
+Anon: I wouldn't have been able to get my lunch without it.
+Reed (shocked): Oh. Oh! Oh fuck, dude I'm sorry to hear that.
+Narrator: What.
+Reed (shocked): New kid in school AND you need the lunch card?
+Reed: Do you like, wanna hang with us? You look like the lonely type.
+Narrator: FUCK no.
+Anon: Naaaaah, I'll be good. I just needed my--
+Reed (explanatory): Come on bro, I'll introduce you to the whole band.
+Anon: You don't have to--
+Reed (considering): Y'know... reward your good deed with a good deed.
+Anon: What.
+Reed: I'll like, be your first friend, Anon.
+Anon: What.
+Reed (explanatory): Yeeaah, man.
+Anon (shrug): I appreciate it, but... y'know...
+Reed: You worried about Trish, bro?
+Anon: ...
+Reed: Yeaah, she can be a bit rough, but she's great.
+Anon: Isn't she on a crusade to assault everyone that laughed at your concert?
+Reed: Oh yeah, she does that sometimes, don't worry about it.
+Anon: Hrmmm...
+Reed: 's fine for you to be worried.
+Reed: You'll see, she's plenty nice.
+Narrator: Maybe I was a bit quick to judge...
+Reed (explanatory): See, there's Trish now.
+Trish (explanatory): Hey, Reed.
+Trish (considering): Sorry, gonna have to return that crowbar a bit later than I promised.
+Trish (considering): Also, I got vengeance on another one of those jerks.
+Anon: Those aren't... related, right?
+Trish (smug): Who's asking?
+Narrator: I need to get out of here.
+Anon: Well Reed, thank you for talking, I'll just be on my wa--
+Reed (explanatory): Hooollld on man, Trish just got here.
+Trish: Reed, what's all this about?
+Reed: Anon here and I had a little... mix-up?
+Reed (explanatory): Anyways, he was a total bro about it...
+Reed (considering): And he's like, super poor and stuff.
+Trish (explanatory): How poor?
+Reed: Y'know that lunch card thing they advertise on the school brochures?
+Trish (unimpressed): Bull.
+Reed: Show her, Anon.
+Anon: I'd rather not...
+Trish (indignant): Oh my goodness you poor soul.
+Reed (considering): Literally, even.
+Reed: So I figured, why not be a bro back to him?
+Reed (explanatory): Like uhhh...
+Reed (explanatory): Be his legit welcome committee.
+Anon: I appreciate the thought, but uhh...
+Anon: I should really be going right about... now, bye.
+Trish (happy): Oh, Fang, what took you so long today?
+Narrator: Why meeee...
+Fang (shocked): Yo. Wait, is that Anon? What's he doing here?
+Narrator: No, it's the other new human transfer student with the dress sense of Rex Luthor.
+Anon: Heeeey Fang. Good to see ya again. Well lunch is almost over so I'll--
+Reed (considering): He's poor.
+Trish (indignant): Like, super poor!
+Fang: How poor?
+Trish (explanatory): Y'know those lunch cards they have on posters near the principal's office?
+Fang (happy): Wow. That is hilariously depressing.
+Narrator: I hate everyone here.
+Fang (unimpressed): Anyways, that doesn't answer my question of why the skinnie loser is here.
+Reed (happy): Man, Anon's like a total bro an' I'm his first friend an' we're gonna be Rock Ring buddies for the rest of the school year!
+Reed (explanatory): Then like... he'll be my business partner an' we'll sell enough goods to get half the country high an' like, fuck narcs and fuck the IRS too.
+Anon: ...
+Fang (considering): Uuuuuuuuuuuuuuuuurrrrrrrrrrggggghhhhhhh. Trish?
+Trish (smug): The morons swapped backpacks and now they're best friends or something.
+Anon: Yeah. That. And now I'm gonna go grab my lunch so--
+Reed (explanatory): We can all grab some together.
+Trish (considering): ...Well, Reed is a good judge of character...
+Fang (unimpressed): Is he?
+Anon: ...Didn't you already grab your lunch, Reed?
+Reed (explanatory): Yeah. I want seconds, man.
+Narrator: What.
+Narrator: I look at Reed's tray and see that it's completely empty.
+Anon: When did you-- How?!
+Reed (explanatory): Come on, man, I've got a mean case of munchies.
+Narrator: I end up walking to get food with Trish, Reed and Fang.
+Narrator: Every time I consider ditching them, Reed says or does something to keep me with the band.
+Narrator: Fuck my life.
+FLAG: c2_lunch_a
+END
+
+# ---- Chapter 2, part 11: lunch, continued (original script lines 2050-2191) ----
+SCENE -1 2 Reed cafeteria 11 8 AUTO REQ:flag:c2_lunch_a
+Narrator: I'm able to hold the makings of a conversation with Reed, but it feels like I'm talking to space.
+Narrator: Trish was listening in while we made our way to the lunch room, but was more focused on her talk with Fang.
+Fang (unimpressed): What do you mean my halter top is "out" right now? I haven't noticed a difference.
+Trish (explanatory): I'm telling you, the next thing is going to be leotards.
+Fang: No, fuck that. I would never wear something that retarded.
+Narrator: As for Reed...
+Reed (explanatory): ...So... You play videogames, right?
+Anon: Yeah, I got a couple consoles and a toaster of a PC.
+Reed: Only Xrox... Battle Saurs is sick...
+Anon: Pachystation has a better lineup overall.
+Reed (considering): But like... Stony-games are all lame... like, just movies lame...
+Anon: You can't prove that.
+Reed (happy): I can.
+Anon: Huh?
+Reed (explanatory): Get your phone out man... Look up "LW_S9znpklI"...
+Anon: How did you say that out loud?
+Reed: Just look it up man...
+Narrator: What's the harm?
+Anon: ...
+? Look the link up | 0 | 0 | | FLAG: link_looked
+? Save it for later | 0 | 0 | | FLAG: link_saved
+IF flag:link_looked
+Narrator: What on earth...?
+Reed: Pretty hilarious right?
+Narrator: What is this, a shitty Netstix cartoon knock off?
+Anon: It's funny in a way, yeah.
+ENDIF
+IF flag:link_saved
+Narrator: I'll save this one for when I get home.
+ENDIF
+Reed (explanatory): Xrox is better anyways, you see the whole lineup they had prepared for...
+Narrator: Reed delves into his rant about console differences.
+Narrator: I thought he was just an airhead, but...
+Narrator: I totally can't get a read on this guy.
+Fang: Well, anyways.
+Fang (considering): The lunch lines aren't going to get any shorter.
+Fang (considering): We should hurry and pick one.
+Narrator: Once we all got our food, we all stand around chatting a bit more outside the line.
+Narrator: Trish and Fang babble to each other about their daily activities all through the lunch line.
+Narrator: Reed on the other hand has pulled out a tablet from his backpack to show me something.
+FLAG: c2_lunch_b
+END
+
+# ---- Chapter 2, part 12: lunch, the last part (original script lines 2192-2608) ----
+SCENE -1 2 Naomi cafeteria 17 5 AUTO REQ:flag:c2_lunch_b
+Reed (explanatory): So like, y'know we got a band, yeah?
+Anon: Er, yeah. Trish brought it up earlier and all.
+Reed: Check it. I've been recording our practices.
+Narrator: Fang and Trish both look at me expectantly.
+Narrator: Fuckshitfuckokay you can do this.
+Anon: Cool, lemme see.
+Narrator: Even through the poor recording quality I can see and hear just how atrocious the band is.
+Narrator: I bite back the grimace threatening to come out as I give the video my full attention.
+Fang: W-well?
+Trish (happy): We're great, right Anon?
+Anon: It's uh... certainly original.
+Trish (smug): I know, right?
+Anon: But like, why two basses?
+Narrator: Fang glances at me from the side. Weird.
+Trish (happy): It's our style!
+Anon: I-I see.
+Narrator: What do I say here? I can only give feedback on games I haven't played, not music!
+? I like the double tension on the G strings. | 0 | 0 |
+? The synchronization between the melody and the submelody compliments the reverb well! | 0 | 0 |
+? Very nice ironic reference to Beethoven's Fur Elise. | 0 | 0 |
+Narrator: The three stop in their tracks and look back at me.
+Narrator: Think I messed up.
+Fang: How could you tell?
+Reed (explanatory): Jeez man, you got the ears of a bat?
+Anon: Uhh, just something I picked up.
+Fang: I didn't know you knew about that sort of thing, Anon...
+Reed (explanatory): Yo, next time we have a concert... you gotta come along.
+Fang (considering): ...Maybe...
+Narrator: Trish glowers at me warily.
+Trish (unimpressed): I dunno, maybe if he actually talked about himself for once.
+Narrator: Nope, nuh uh, no way, abort!
+Reed (explanatory): Yeah, man, go ahead. None of us are judgin'. I'm not at least.
+Anon: Well...
+Fang, Reed, Trish: Ohfuck. Sorry Anon, we gotta bail.
+Anon: Huh? Where--
+Narrator: They're already gone.
+Narrator: Pretty impressive how fast they can move even with their hands full.
+Narrator: But what could've made them run like that?
+Naomi (considering): ANON!
+Narrator: Oh.
+Narrator: I turn around to see Naser and Naomi approaching, food in hand.
+Naomi (explanatory): I knew I'd find you here with the others, Anon!
+Naomi (explanatory): Shame they ran off, why do they do that?
+Narrator: Her shrill goody goody sugary voice is piercing through the chatter of the lunchroom, I don't wanna reply if it means hearing more of her voice...
+Naomi: Wasn't that Naser's sister? How wonderful that you're making friends, Anon!
+Naomi: Tell me everything! What were you and Fang talking about?
+Naomi: I wanna know all about it!
+Narrator: Oh help me, God. I just can't catch a break.
+Narrator: I just want to go home...
+Narrator: But there's still half a day to go...
+Naser: Hey Anon... you uh... seem kinda low energy, are you alright?
+Narrator: The Anon you are trying to reach is currently having an existential meltdown.
+Narrator: Please leave your message after the scream.
+Naomi (happy): Aaaww, he's just thrilled to make new friends!
+Naser (happy): Yeah man, good on you. You're quite the extrovert!
+Narrator: I'm mentally screaming, I swear I just want to get out and never come back.
+Naser: Was that really my sibling you were hanging with?
+Anon: Fang and her friends, yeah. Strange group, I know.
+Naomi (considering): I'll say.
+Naser: Sh--they're not that bad once you get to know them.
+Anon: Colorful folk, I know.
+Naser: Uh... no... I mean THEY...
+Anon: Hm?
+Naser (unimpressed): Fang!
+Anon: Uh-huh... sure hope so. Seems I'm going to be her lab partner for the rest of the year.
+Naser: Whoa.
+Narrator: Naomi pauses for a second.
+Naser: Honestly. They're just going through a phase man.
+Anon: That phase include rants about non-binarism?
+Naser (sad): *sigh* Fang hit you with that too?
+Naomi (explanatory): What a great opportunity for real friendship Anon! I'm so happy for you!
+Naser (considering): ...?
+Anon: ...?
+Naomi: If there's anything Fang needs in these trying times, it's a new friend to talk to!
+Anon: Uuuuuh, I don't know about that, you know how they is, right?
+Naomi (happy): I would love it if you tried! Naser would appreciate it!
+Narrator: Would he?
+Naser (explanatory): Whoa, calm down, boo.
+Naser (explanatory): That's not how it works... and I don't think...
+Narrator: The bell's loud sound rings on our ears.
+Narrator: A rush of relief and dopamine overcome me.
+Narrator: I'm free.
+Naser: Uhhh... we'll talk later, Anon. I'll have to keep my eye on you, though.
+Naomi: Don't worry, Naser. I know Anon is of good character!
+Narrator: What is she talking about?
+Narrator: You know what, it don't matter. Nonathiss matters.
+Narrator: Only useful thing I learned all day.
+Anon: Uhhhh... I guess I'll have to go now, see you around.
+Narrator: Be a little nicer, Anon.
+Anon (happy): Ask if you need anything, I'll help you out.
+Naomi (happy): Oh I'll hold you on that one! Just you wait, hahahahahah!
+Narrator: Nice. Now you'll never get them off your back. Congratulations.
+Naser (happy): Hey, take it easy, man!
+Naomi: Come Naser! We have a busy day today!
+Naser (considering): Oh, sure.
+Anon: See ya.
+Narrator: ...
+FLAG: c2_done
+END
+
+# ---- Chapter 3 = the original's chapter 3 (band practice and the guitar feedback). The chapter's last joke line, Anon's closing thoughts and the lewd CG are left out. ----
+
+# ---- Chapter 3, part 1: one week later, English class (original script lines 1-476) ----
+SCENE -1 3 Trish classroom 13 9 AUTO
+Narrator: -- One Week Later --
+Narrator: It's math. Bane of retards and lazy intellectuals alike.
+Narrator: And teachers too, judging by the lack of a certain coomer teacher.
+Narrator: Substitute today, which means busywork. Group problems busywork specifically.
+Narrator: Of course, I can't escape this any more than I could have escaped the lab partner assignment.
+Narrator: At least here I have the opportunity to just keep to myself for an hour.
+Narrator: I don't even bother attempting the assignment, instead pretending my phone is a calculator and spending the first half shitposting about video games I haven't played online.
+Narrator: The second half, interrupted by something pointy to the back of the dome.
+Narrator: *sshk*
+Narrator: I can feel something stuck between my chair and my back.
+Narrator: I fish around and pull out a crumpled paper airplane, a completed set of problems.
+Narrator: ...this is Reed's. And it's...
+Narrator: ...done?
+Narrator: Even the extra problems that I don't even bother with because they take another ten minutes each.
+Narrator: I turn around to see that technicolor burnout waving me over. He's sitting next to Trish.
+Narrator: She's giving me the evil eye.
+Narrator: At least I think it's the evil eye. Whatever that expression is, it clashes with her smile.
+Narrator: Might as well see what they want.
+Narrator: As I weave through the maze of desks squished together with partners more interested in their phones than the worksheet, I catch a hint of whatever Reed and Trish are talking about.
+Reed: ...Honesty is the best policy, eh?
+Reed: ...Bad juju to keep somethin' bottled up...
+Narrator: Reed grabs hold of another chair and sets it on Trish's other side, nodding in my direction before taking a big pull from whatever he's got in that thermos on his desk.
+Narrator: The widening of his pupils suggest it's more than just Roarbucks cold brew in it.
+Trish (happy): Hey, Anon!
+Anon: You guys need something?
+Trish (happy): Nah, just wanted to chat a bit since we got the time.
+Narrator: There's something in her tone of voice...
+Narrator: It's like she's getting ready to gore me with those nubs she calls horns.
+Anon: ...Sure
+Reed (explanatory): Imma let you two get to whatever... gonna go for a refill...
+Narrator: He shakes his thermos and heads for the door.
+Narrator: What's in that anyway?
+Reed (considering): Don't ask...
+Narrator: Fair enough.
+Narrator: ...Wait...
+Narrator: Fuck it.
+Trish: So... Anon... You and Fang?
+Anon: ...You and Fang what?
+Trish: They've been talkin' about you.
+Anon: They?
+Narrator: The tiny triceratops rolled her eyes dramatically.
+Trish (unimpressed): Fang. Fang's been talkin' bout you.
+Anon: All good things, I'm sure.
+Narrator: Fang's been talking about me? That's dumb.
+Narrator: Oh yeah. The phones.
+Narrator: All we've been doing is more labwork in science.
+Narrator: Last Thursday I tried to remember how to make a railgun.
+Narrator: To show I could, of course.
+Fang: "Pfft, I could make one too."
+Narrator: She seemed unimpressed at the time, but...
+Anon: Was it about making a railgun?
+Trish (explanatory): Er... Yeah, it was.
+Trish (unimpressed): What exactly are you talking about with them?
+Anon: Just science stuff.
+Anon: The railgun is just something I happen to know though, picked it up from an old game.
+Narrator: Trish raises an eyebrow.
+Trish: ...Right.
+Anon: Why do you ask?
+Trish: You learned to make a deadly weapon from a video game?
+Narrator: Her tone is flat. Unlike her chest.
+Anon: I wouldn't say deadl--
+Trish (unimpressed): Don't interrupt.
+Trish (explanatory): Why would you think that it's a good idea to make a weapon in class?
+Trish (explanatory): How did you not get in trouble?
+Anon: Spears actually did talk to me, said something about the "great equalizer".
+Narrator: Trish grabs the bridge of her snout.
+Trish (annoyed): This is why men are useless.
+Narrator: She continues to mutter to herself. All of it incoherent.
+Anon: Is there a point?
+Narrator: She rounds back on me, anger painted clearly on her face.
+Trish (angry): Look, Anon, YOU may be into that stuff, but leave Fang out of it.
+Trish (angry): They have better things to do than... than...
+Trish (angry): Than play with some man-child's lethal toys!
+Reed (shocked): Whoa... Harsh...
+Narrator: Reed slumps into the seat next to Trish, sipping on his thermos of...
+Reed (considering): Just agua, bro...
+Narrator: Thermos of water...
+Narrator: What the--
+Reed: What'd I miss?
+Trish (explanatory): I'm just trying to tell Anon here that he shouldn't be telling Fang how to make a fuckin' gun in school.
+Reed (explanatory): Why not?
+Trish (annoyed): We've been over this.
+Reed: We have? When?
+Trish (considering): Less than five minutes ago.
+Reed: Thought we were talkin' about Anon?
+Trish (indignant): Yes!
+Trish (indignant): And specifically!
+Trish (indignant): We were talking about Anon's gun!
+Narrator: Heads start to turn.
+Narrator: Reed grins at them all.
+Reed (happy): Then how bout these guns?
+Narrator: Reed places his hands on the back of his head and flexes his biceps.
+Narrator: Trish's face is a blur of emotions.
+Narrator: At first confused, then fucking pissed, then aroused, then back to fucking pissed, all in the space of an attosecond.
+Trish (angry): Not those! The one he made with magnets!
+Reed (unimpressed): But like... how do magnets work?
+Narrator: DING-DONG BING-BONG
+Narrator: All at once all the students giving the clock a blank stare stand to attention and file out the door.
+Trish (angry): I-I... Damn it, Reed!
+Narrator: Trish punches Reed in the shoulder, gives me another evil stare, and saunters out the room.
+Reed (considering): Hey.
+Narrator: Reed pats me on the shoulder.
+Reed (happy): Bruh.
+Narrator: He gives me a thumbs up and exits as well.
+Narrator: Leaving only the substitute teacher, looking at me from her desk impatiently for me to leave.
+Narrator: Guess it's her lunch period, too.
+FLAG: c3_class
+END
+
+# ---- Chapter 3, part 2: lunch (original script lines 477-748) ----
+SCENE -1 3 Naser cafeteria 17 8 AUTO REQ:flag:c3_class
+Narrator: ...
+Narrator: Naser ended up dragging me to sit with him and the magenta motormouth again.
+Narrator: Naomi hovers over Naser, who currently has Gucci under his eyes.
+Naser (unimpressed): So, I uh... talked to the soccer team earlier.
+Naser (unimpressed): They're going to make the first game after all.
+Naomi (explanatory): Isn't that great, Anon?
+Anon: ...
+Naser (unimpressed): I also... got the L&L Club to finally take down their christmas decorations...
+Naser (unimpressed): So... the library's clean again...
+Narrator: Naser's head lands in his chicken salad, then he jerks wide awake.
+Naomi (shocked): NASER!
+Naser (shocked): OH GOOD LORD NOT THE WATER--
+Anon: ...
+Naser (sad): Ugh... sorry.
+Naser (unimpressed): ...Did you say something, Anon?
+Anon: Naser, you look like you fell into another blender.
+Anon: What's going on, big guy?
+Naser (unimpressed): Don't worry about it...
+Naser (unimpressed): Just some... family problems last night...
+Anon: Like what?
+Naser (sad): Ugh...
+Naomi (considering): You don't have to tell him if you don't want to, dear.
+Naomi (happy): Why don't you wipe that alfredo sauce off your cute little face.
+Narrator: She's so saccharine she'd give a third world country diabetes.
+Naser (sad): It's my sister again...
+Narrator: Why is it always his sister with him?
+Naomi (sad): Aww...
+Naser (sad): I was going to sleep last night, when I heard something downstairs.
+Narrator: ...When did this turn into an interrogation?
+Naser (unimpressed): It was about one or two in the morning.
+Naser (unimpressed): I checked what it was, and...
+Naser (sad): Fang was just, standing in front of the microwave.
+Naser (sad): Staring at the dino nuggets rotate inside.
+Narrator: At one in the morning?
+Naser (sad): At one in the morning.
+Naomi (sad): This is a personal issue, isn't it?
+Naomi: Wouldn't you rather just be enjoying lunch with us?
+Naser (sad): I just need advice from someone at this point, Naomi.
+Naomi (considering): But from Anon?
+Anon: But from me?
+Narrator: Naser continues.
+Naser (sad): I asked her what she was doing, and she just...
+Naser (unimpressed): Just says "fuck off...", so I think "maybe dad will help".
+Naser (sad): ...He didn't.
+Naser (sad): ...They just got into a shouting match.
+Naser (sad): Screamin' bout her lack of control an' dad was pissed an'--
+Naomi (sad): Poor baby.
+Narrator: Naomi wraps her arms around Naser's head, cradling the tired pterosaur in her bosom.
+Narrator: There's a rumbling snore and it's clear that Naser has checked out.
+Anon: ...Riiiiiiiight...
+Narrator: Naomi looks distraught.
+Naomi (sad): He's always like this...
+Naomi (sad): But it's been getting worse recently...
+Anon: Going unconscious?
+Naomi (considering): Trying to help. Wearing himself ragged.
+Naomi (unimpressed): That Fang...
+Naomi (sad): We should help Naser.
+Anon: What, by talking to Fang?
+Naomi (sad): By taking him to the nurse's office.
+Narrator: Ah fuck.
+Narrator: Naomi looks at me with the biggest, wettest doe eyes possible.
+Anon: Alright alright. He doesn't look that heavy anyway.
+Naomi (sad): Only a hundred and sixty pounds.
+Anon: How do you-- nevermind.
+Narrator: Naomi puts herself under Naser's left arm, motioning me to take the other one.
+Narrator: I sling his arm around my back and--
+Narrator: GOOD LORD HE'S HEAVY.
+Naomi (sad): Alright, the nurse's office is down the main hall on the left side, near the front desk.
+Narrator: I'm clenching my face too much to be able to speak, I can only get a slight nod out.
+Narrator: ...
+FLAG: c3_lunch
+END
+
+# ---- Chapter 3, part 3: the hallway (original script lines 749-882) ----
+SCENE -1 3 Narrator hallway 24 5 AUTO REQ:flag:c3_lunch
+Narrator: After dropping Naser at the nurse and leaving before Naomi could argue with her about staying, the lunch bell rings.
+Narrator: With music at the ass end of the campus I have to sprint through the halls.
+Narrator: Fuck today, I avoided gym class for a reason.
+Narrator: Halfway to Music class, I slam into somebody and tumble to the floor.
+Anon: Augh...
+???: You...
+Anon: AH!
+Narrator: Sorry, sorry sorry!
+Narrator: I get up from the floor and look at the stego who bumped into me.
+Narrator: The plates on her back twitch as she looks me up and down.
+???: Judgement...
+Narrator: A chill rolls over me.
+???: Karma? No. No, maybe second chance?
+Narrator: She draws closer, a contemplative expression on her face.
+???: Ah, I see now.
+Anon: What?
+???: You've important choices to come.
+Anon: I do?
+Anon: Wait back up what the fuck are you talking about?
+???: This.
+Narrator: She reaches toward my chest, plucking something off of it.
+Narrator: She holds it up for me to see it's some oversized playing card.
+Anon: Still lost.
+???: It's you. Your card.
+???: You are on the precipice of a great ordeal. Many difficult points of divergence and contention are coming your way. Reflect on them.
+Narrator: I think about asking the green weirdo to make sense, but the bell is about to ring.
+Anon: Yeah, thanks, sure.
+Anon: Sorry, gotta dash.
+FLAG: c3_hall
+END
+
+# ---- Chapter 3, part 4: band practice (original script lines 883-1226) ----
+SCENE -1 3 Fang band_room 9 5 AUTO REQ:flag:c3_hall
+Narrator: I slam into the band room door just as the late bell trills, panting and sweaty.
+Narrator: What...
+Narrator: The teacher then took to his extremely lavish loveseat, threw on a pair of headphones and blacked out.
+Narrator: I looked at the scattered instruments, left alone for whatever reason.
+Narrator: Dented-looking brass and cracked woodwinds. Even a bass with a missing string.
+Narrator: Wow. I feel like that right about now.
+Narrator: I reach for one at random, taking a wooden... thing...
+Narrator: It looks like an oak tree made love to an eggplant and this is the aborted monstrosity in Mexico.
+Narrator: Whatever, I melt into my chair and pull out my phone. Seems a majority of my classmates have a similar idea.
+Narrator: I've some shitposting to do.
+Narrator: Let's see...
+Narrator: Ah yes, perfect.
+Narrator: Click post.
+Narrator: Aaaand now to wait.
+Narrator: Nefarious deed for the day done, I look around the room out of boredom.
+Narrator: Oh fuck no.
+Narrator: Fang has a weapon of mass hearing loss.
+Narrator: I'm covering my ears in preparation when the ptero-rist starts strumming and...
+Narrator: Oh wow.
+Narrator: I still have my hearing.
+Narrator: In fact she's actually playing something pleasant.
+Narrator: It's mellow. Relaxed. A slow rhythm that carries a strange nostalgic hint to it.
+Narrator: The difference between this and the performance is night and day.
+Narrator: What gives?
+Narrator: Looking a bit closer, she's swinging her tail a bit to the rhythm.
+Narrator: She uses her tail as a metronome?
+Narrator: Suddenly, the phone slips from my hand onto the floor.
+Anon: SHIT!
+Narrator: The sound it makes as it clatters on the ground is a klaxon of pants-shitting terror.
+Narrator: It lies face down in the aisle.
+Narrator: Do I really want to pick it up and potentially face a harsh reality?
+Narrator: Schrodinger's crack.
+Narrator: ...I can't just leave it there.
+Narrator: I pick up the phone and slowly turn it over.
+Narrator: It's the moment of truth.
+Narrator: ...No cracks?
+Narrator: Thank the Lord.
+Fang (happy): Yeah, you got lucky.
+Narrator: Fang has stopped playing and is throwing a small smirk my way.
+Narrator: I should probably say something...
+Narrator: Her playing is pretty good, I'll compliment that.
+Anon: That sounded way better than in the video Reed took.
+Narrator: ...
+Narrator: Wrong choice of words.
+Fang (angry): You're still not off my shit list, watch it.
+Narrator: Quick Anon, think.
+Anon: Why didn't you play guitar back then, you're obviously a lot better with it.
+Fang (considering): Would've if I could've.
+Anon: What do you mean?
+Narrator: There's an empty seat next to Fang.
+Narrator: Finders keepers, I guess.
+Fang: The band is just Reed, Trish, and I.
+Fang: So we all have to decide by majority what happens.
+Fang: Reed says using a bass is more unique, and Trish always says how it's a "promising business model".
+Anon: But it sounds like you play the guitar much easier than a bass.
+Fang (considering): I play the bass just fine.
+Fang (considering): I think the problem is more that if you want to make an unconventional band layout, you damn well better know what you're doing.
+Fang: If you're anything short of masterful it won't sound good.
+Fang: And when it comes to music, it either sounds good or it doesn't.
+Fang: Simple as.
+Narrator: She continues strumming.
+Anon (shrug): But it's just a high school band, right?
+Anon (shrug): Shouldn't it just be fun?
+Fang: It is, yeah.
+Anon: Even though you're just doing what they want without getting a say in it?
+Narrator: Fang flinches and misses a note.
+Fang (angry): ...
+Fang: It's not like that...
+Fang: It's just... Trish says... I mean... God damn it.
+Fang: Look, we're better with two basses. Trish and Reed say so.
+Anon: The au--
+Narrator: Uhp.
+Narrator: Fuck.
+Narrator: I almost said "the audience at the concert" to her out loud.
+Fang (unimpressed): What was that?
+Anon: Nuthin'
+Narrator: Fang growls at that.
+Fang (considering): You know what, we're having band practice after school today.
+Fang: Just show up and see for yourself.
+Anon: And what if I don't?
+Fang (happy): You'll be a little bitch that's wrong.
+Narrator: Oh.
+Narrator: In that case.
+Anon: Fuck you, I'm right, your band sucks with two basses, and you shoulda been on guitar!
+Narrator: I lock eyes with her.
+Fang (unimpressed): Fuck you!
+Anon: Fuck you!
+Fang (angry): Fuck! You!
+Anon (angry): FUCK YOU!
+Narrator: Fuck me.
+Narrator: ...
+FLAG: c3_band
+END
+
+# ---- Chapter 3, part 5: outside the auditorium (original script lines 1227-1309) ----
+SCENE -1 3 Narrator hallway 30 3 AUTO REQ:flag:c3_band
+Fang (unimpressed): Hurry up, dweeb. If I can keep ahead of you while carrying two instruments, you can speedwalk.
+Anon: You sure you don't want me to carry one?
+Fang (unimpressed): Pfeh.
+Narrator: Fang is leading me back to the auditorium with both the acoustic guitar "borrowed" from the music room and her bass in hand, one over each shoulder.
+Narrator: When we eventually get to the auditorium, Fang stops.
+Narrator: Is something wrong?
+Anon: Uh, is everything--
+Fang (unimpressed): The doors, moron.
+Narrator: She swings the guitar cases on her shoulders around a bit.
+Narrator: Oh.
+Narrator: I step around her and grab the handle, pulling the door wide open.
+Anon: Ladies first.
+Narrator: ...
+Narrator: Fang growls and stomps on my foot as she walks past.
+Anon: FUCK!
+Fang: Hurry up already.
+FLAG: c3_door
+END
+
+# ---- Chapter 3, part 6: the rehearsal, and the question about the guitar (original script lines 1310-1867) ----
+SCENE -1 3 Fang auditorium 11 3 AUTO REQ:flag:c3_door
+Narrator: Inside, Reed and Trish already have everything set up onstage.
+Narrator: Where does Reed keep that huge drumset during the day?
+Narrator: Trish waves her arms from the stage.
+Trish (very happy): HEY, FANG! WHAT TOOK SO LONG?
+Fang: HAD TO GRAB SOMETHING.
+Narrator: Trish squints in the spotlight, then finally notices me.
+Trish (unimpressed): What--
+Trish (indignant): What's he doing here?!
+Narrator: Fang slings both cases onto the stage, then climbs on herself.
+Fang: Proving a dumbass bigot wrong.
+Anon: So you admit there's smart ones?
+Narrator: Fang then ripped something from Trish's hands and threw it at me.
+Trish (angry): What the fuck?!
+Narrator: It strikes against my head with a dull *tonk* and lands on the ground in front of me.
+Narrator: Looking down at the makeshift shuriken, it was a copy of "VVORM DRAMA's hit new single INDRAGON ONSLAUGHT".
+Trish (indignant): Fang! I just made that in art class!
+Anon: It looks like picasso had a seizure.
+Fang (considering): He was being an ass!
+Anon: I was.
+Reed (explanatory): Like... are we on break now?
+Trish (considering): We haven't even started!
+Trish (annoyed): Fang, why is Anon here?!
+Fang: Like I said, proving him wrong.
+Anon: More like proving me right.
+Trish (explanatory): Proving him wrong how?
+Reed (considering): Like... Playing guitar, right? Ya wanted to play your guitar...
+Trish: What?
+Fang: Yes! I mean--
+Anon: Ha!
+Fang (considering): No, I mean Anon thinks that if I used a guitar instead of bass the music would sound better.
+Trish (smug): What? No wayyyy.
+Fang (unimpressed): I know, right?
+Reed (explanatory): Woooow, way to try throwing everything off, Anon...
+Fang: Mm. Let's just go through "I Need Meth Money By Tuesday Night And If I Don't Get It I Will Stomp On Your Child".
+Narrator: Don't say ayy lmao.
+Fang: Three... Two... One...
+Narrator: My mind went blank.
+Narrator: I don't know what just happened.
+Narrator: I look to the stage and see Fang, panting, looking distressed.
+Fang (sad): S-see? Totally awesome, r-right?
+Narrator: Not the word I would use.
+Anon: ...I think you should give the guitar a try.
+Trish (unimpressed): Oh shut up, you don't know anything about music.
+Fang (considering): Might as well. That's what I brought him for, after all.
+Trish (unimpressed): You're really siding with him on this?
+Trish (explanatory): We already decided VVURM DRAMA is better with only drum and bass, remember?
+Reed (considering): Yeah man... WAY more unique that way.
+Anon: Aren't there like two bands in existence that pulled it off?
+Reed (explanatory): That means there's a chance then, yeah...?
+Anon: It can't hurt to try, right?
+Trish (unimpressed): You don't get a say in this, it's a band decision and we already made our choice.
+Fang (unimpressed): Maybe he's right, Trish. What's the big deal?
+Trish (angry): The "deal" is we're wasting enough time as it is when we should be practicing!
+Trish (unimpressed): Especially wasting time on playing guitar when it doesn't match any of our stuff.
+Narrator: That clearly struck a nerve.
+Fang (angry): "Wasting time" playing guitar? What's THAT supposed to mean?
+Narrator: Fang rounds on Trish, jabbing an accusing finger into the little triceratops' surprisingly voluminous chest.
+Fang (angry): Every time I want to make changes you guys always overrule me!
+Fang (angry): Even when it's something like playing my favorite instrument in my own band!
+Narrator: Yikes.
+Trish (indignant): Come on Fang, you know I didn't mean it that way!
+Trish (indignant): We decided that democratically, right Reed?
+Reed (considering): Yeah, but... like, there are only three of us, y'know?
+Narrator: I'll hate myself for this...
+Narrator: ...this is already getting too intimate for me...
+Narrator: ...but maybe I should say something.
+Narrator: It's only going to get worse if I don't.
+Narrator: But this seems like a personal argument between them.
+? Speak Up | 0 | 1 | | FLAG: guitar_speak_up
+? Stay Silent | 0 | 0 | | FLAG: guitar_stay_silent
+IF flag:guitar_speak_up
+Narrator: Fang does seem very passionate about playing guitar.
+Narrator: It could only help their music, right?
+Anon: Just give Fang a chance, have you ever even let them play guitar with the band?
+Narrator: That seemed to stop Trish in her presidential yeezys.
+Trish (considering): I-- uh, well... not really. We voted on it in our first jam session together.
+Narrator: Fang made a weird face, like she couldn't believe I was standing up for her.
+Narrator: Honestly I couldn't believe I stood up for her either.
+Narrator: But god dammit I'm winning this challenge!
+Anon: If you're really Fang's friend, you should at least let them try.
+Narrator: ...
+Narrator: Trish's mouth opened and closed, as if she was trying to find the right words.
+Narrator: She threw up her hands and let out a frustrated sigh.
+Trish (considering): Fine, I guess we can try it with the guitar...
+ENDIF
+IF flag:guitar_stay_silent
+Narrator: Can't guarantee their style won't be better than dogshit if I lose this challenge.
+Narrator: Certainly can't get worse.
+Narrator: This is between the members of the band.
+Trish (considering): In the end, majority still rules.
+Trish: I'm sorry, Fang, but we can't get into creative squabbles like this all the time.
+Trish: And you already agreed to it, right?
+Narrator: How controlling.
+Narrator: Fang hangs her head in defeat.
+Fang (sad): I guess so...
+Reed (unimpressed): Hey man, Fang... Don't let it get to you so hard...
+Reed (explanatory): We just gotta get it out of your system's all, right...?
+Reed (explanatory): Like, y'know, get it all out now so you don't have to later, yeah...?
+Reed (explanatory): Like Trish said...
+Trish (unimpressed): I never said that.
+Reed (explanatory): 'Cuz, that's how these things work, right? You know until you don't, and then all the rest is wack.
+Trish (considering): I... guess?
+Trish: What?
+Reed (explanatory): It's like the bigger picture, you got Fang playin' bass with all us...
+Reed: And they're all "ohh yeah good thing I'm not thinking about playing other instruments, yeah yeah"
+Reed (considering): And you're all like "see, I told you so"...
+Trish (happy): Yeah, so we should let them play now to get it all out for later!
+Trish (unimpressed): Wait...
+Narrator: If there were any cameras rolling, they'd be zooming in on Trish's face.
+Fang (happy): Thanks, Reed.
+Trish (annoyed): Yeah, thanks a lot.
+ENDIF
+FLAG: c3_rehearsal_a
+END
+
+# ---- Chapter 3, part 7: the rehearsal, continued (original script lines 1868-2268) ----
+SCENE -1 3 Fang auditorium 12 3 AUTO REQ:flag:c3_rehearsal_a
+Fang (happy): Alright, this time we're doing "I Gave The Special Kids The Jonestown Special And Now I'm Going To Jail"!
+Narrator: ...I'm gonna need Raptor Jesus after this one...
+Fang: And a three, two, and...
+Narrator: Opposed to the nostalgic tune earlier, Fang rapidly strums on her borrowed guitar.
+Narrator: It's fast and rough but the tone carried doesn't melt my eardrums.
+Narrator: Watching and listening now I can see and hear the difference clear as day.
+Narrator: They're actually not bad.
+Narrator: Not good, not by any metric worth its weight.
+Narrator: But at least I don't cringe so hard my spleen erupts from my side and creates a splash zone.
+Narrator: I find myself bobbing to the song, in fact.
+Narrator: And just as I consider the song "gittin gud", it ends.
+Narrator: I feel a little disappointed that the show ended so soon.
+Narrator: Then I remember it's not a show at all.
+Narrator: And that I definitely won.
+Narrator: There's sweat dripping from Fang's brow, and her black clothes are clinging to her a bit more tightly.
+Narrator: The grin on her face stands out the most though.
+Fang (happy): See! Totally better with a guitar Trish!
+Anon: Ha! I win!
+Narrator: Trish, Reed, and Fang turn to look at me.
+Fang (unimpressed): Oh... OH! OH GOD DAMN IT!
+Anon: So you're now a normal band?
+Fang (considering): I mean...
+Narrator: Trish scowls.
+Trish (unimpressed): A vote then.
+Trish (unimpressed): Who votes if we stick to drum and bass?
+Narrator: She's the only one to raise her hand.
+Trish (unimpressed): fff... And against?
+Narrator: Even I raise my hands along with Reed and Fang.
+Trish (unimpressed): You stay out of this Skinnie!
+Anon: Skinnie?
+Fang (very happy): Yessss!
+Reed (unimpressed): So like... do we gotta redo all the songs?
+Fang (happy): It's only one instrument line.
+Fang (happy): Shouldn't take too long.
+Trish (unimpressed): Ugh...
+Trish (annoyed): There goes our main marketing strategy.
+Narrator: Marketing strategy? I thought she was a triceratops, not a rhinorex.
+Narrator: I'm abusing my good luck here so I probably should leave.
+Anon: That was very fun you guys, I hope I can see you all play more... again... better now than it was before... uuuhhhh...
+Anon: We're cool right? Bye!
+Narrator: As I move to the door Fang calls out.
+Fang: Wait!
+Fang (unimpressed): We uh...
+Narrator: I look to see her fidgeting onstage.
+Fang (considering): We couuuld uh... OH! Feedback! We could use your feedback!
+Trish (surprised): We what?! Fang, from him?
+Anon: Wha--
+Fang: He's been helpful! So why not? Reed, back me up here.
+Reed (considering): mmmm... Kay... Anon should stay... He's a bro.
+Trish (indignant): REALLY?! BUT--
+Fang (happy): Anon, you'll stick around a while, right?
+Anon (shrug): If you guys'll order some Dino-moe's, sure.
+Narrator: The three of them just stare blankly.
+Narrator: Wait. Auditorium. Pizza.
+Narrator: Fuck.
+Narrator: Ohfuckohshitfortheloveofallthatisholywhynow.
+Anon: I-I mean, uhh...
+Anon: Actually, I have to go. Like, right now. So... Bye.
+Fang (unimpressed): Why? I can spring for pizza if you're too broke.
+Anon: Nah nah nah, no need.
+Anon: Plus I just remembered, I have to do uh... important things.
+Fang: More important than our music?
+Anon: Err, yeah. See I have to go return a blu-- a book!
+Narrator: Fucking hell mouth, don't go slipping weebtalk now!
+Anon: See it's WAAAAY overdue and I can NOT afford the late fee.
+Reed (unimpressed): Wait a minute...
+Narrator: ?
+Narrator: I almost didn't recognize Reed's voice, he said that way too sharply.
+Reed (unimpressed): ...the late date is like... two weeks... Are you up to something, Anon?
+Narrator: He sounds completely lucid and didn't slur any words...
+Narrator: Oh no.
+Narrator: SHUT IT DOWN
+Narrator: SHUT IT DOWN
+Narrator: THE PINK CUBONE KNOWS
+Anon: It's from the library near my place. Suuuper strict. Y'know how public libraries are like.
+Reed (explanatory): Riiiiiight.
+Trish (angry): WILL YOU JUST FUCKING LEAVE ALREADY?
+Narrator: I love you, Trish.
+Anon: Sure, bye.
+Narrator: I scramble away to the exit.
+Narrator: As I turn to make my way out of there, on the stage I hear...
+Trish (unimpressed): THANK YOU.
+Narrator: I uh... hear them chattering...
+FLAG: c3_done
+END
+
+# ---- Chapter 4 (PLACEHOLDER; the points are bigger than the real game's so every ending can still be reached while testing) ----
+SCENE -1 4 Fang rooftop 10 4 AUTO
+Fang: Graduation's close. I'm not sure about any of it.
+Fang: What do you think I should do?
+? Do what you love. I'll back you up, whatever happens. | 3 | 3 | ...That helps more than you know. | FLAG: wing_story
+? Whatever you pick, I'm with you. | 0 | 3 | That's not an answer.
+? Don't ask me. | 0 | 0 | Wow. Thanks.
+END
+
+SCENE -1 4 Naomi school_entrance 22 12
+Naomi: So. Did you two work it out?
+Naomi: Be honest. What are you going to do now?
+? Be honest with everyone, myself included. | 1 | 1 | That's all anyone can do.
+? Focus on what I want. | 1 | 0 | Fair enough.
+? No idea. | 0 | 0 | Well. That's something.
+END
+
+# ===================== NAOMI'S ROUTE (route 0) =====================
+# What if Naser and Naomi broke up a week before Anon arrived?
+
+# ---- Chapter 1 ----
+SCENE 0 1 Naomi hallway 12 4
+Naomi: Oh. Hi, Anon. Sorry, it's been a rough week.
+Naomi: Naser and I ended things right before you showed up.
+? That's rough. Talk if you want, or I'll just sit here. | 1 | 1 | ...Thanks. That actually helps.
+? That sounds painful. | 0 | 1 | It is. Thanks for saying so.
+? Not my business. | 0 | 0 | Right. Yeah.
+END
+
+SCENE 0 1 Naser school_entrance 8 12
+Naser: Naomi told you, huh? We're okay. Mostly.
+Naser: Look out for her, will you?
+? I'll be a good friend to both of you. | 1 | 1 | That's all I'm asking.
+? I'll keep my head down. | 1 | 0 | Understandable.
+? Not promising anything. | 0 | 0 | Fair.
+END
+
+# ---- Chapter 2 ----
+SCENE 0 2 Fang neighborhood 22 10
+Fang: Naomi's been quiet. She fixes everyone else's problems first.
+Fang: Don't let her do that to herself.
+? I'll make sure she isn't alone, and look after myself too. | 1 | 1 | ...Good. Do that.
+? I'll keep an eye on her. | 0 | 1 | That'll do.
+? She'll be fine. | 0 | 0 | You don't know that.
+END
+
+SCENE 0 2 Naomi rooftop 10 4
+Naomi: I once moved some school records around, to get two people talking.
+Naomi: I thought I was helping. Was that wrong?
+? It came from a good place. But next time, ask. | 1 | 1 | Next time, I will.
+? It worked out for me. | 1 | 0 | ...I'll take that.
+? Yes. It was wrong. | 0 | 0 | Yeah. I know.
+END

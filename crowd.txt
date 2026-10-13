@@ -1,0 +1,68 @@
+# Background characters: they only say boring things when you press E. Story characters (the ones in story.txt) come first.
+#   CROWD <map> <x> <y> <name> | line | line | ...      (one of the lines is picked at random)
+# Rules the game checks: the tile can't be a wall, a door, the start tile or a tile a story scene uses; two characters can't share a tile.
+
+# ---- neighborhood ----
+CROWD neighborhood 5 7 Neighbor | Morning. | Nice fog today. | Don't litter.
+CROWD neighborhood 38 18 Dog Walker | Woof. | Don't pet him. He bites. | ...
+CROWD neighborhood 3 4 Jogger | Can't talk, running. | On your left. | *huff* *huff*
+
+# ---- school_entrance ----
+CROWD school_entrance 3 8 Student | Yo. | Sup. | Late again?
+CROWD school_entrance 13 13 Nerd | Did you finish the homework? | Don't talk to me before first period. | Hmm? Oh. Hi.
+CROWD school_entrance 7 9 Jock | Sup, bro. | Out of my way. Kidding. Mostly. | Gym's after lunch.
+CROWD school_entrance 22 9 Freshman | Which way is the cafeteria? | I'm lost. | Is it always this foggy?
+
+# ---- garden ----
+CROWD garden 1 9 Student | Shh, I'm napping. | Nice flowers, huh. | ...
+CROWD garden 11 7 Gardener | Don't step on the plants. | Water's free. Take some. | Hm.
+
+# ---- hallway ----
+CROWD hallway 8 2 Student | Yo. | Hey. | Ugh, Monday.
+CROWD hallway 23 7 Jock | Is it lunch yet? | Sup. | Move it, nerd. Joking.
+CROWD hallway 37 3 Nerd | I'm late for class. | Excuse me. | Please don't bump my books.
+CROWD hallway 8 6 Senior | Freshmen, am I right? | Graduation can't come soon enough. | Hm.
+CROWD hallway 14 7 Student | My locker's stuck again. | Hey. | Whatever.
+CROWD hallway 30 7 Freshman | Where's room 12? | I'm lost. | Hi?
+CROWD hallway 34 7 Student | Don't talk to me. | Yo. | Sup.
+
+# ---- classroom ----
+CROWD classroom 7 10 Student | Shh, class is starting. | Did you do the homework? | Yo.
+CROWD classroom 12 8 Student | I wasn't paying attention. | Hey. | What page are we on?
+CROWD classroom 6 7 Nerd | I read ahead. | Sit down, please. | Hi.
+CROWD classroom 17 1 Student | ... | Zzz. | Five more minutes.
+CROWD classroom 2 9 Student | Can I copy your notes? | Sup. | Ugh.
+CROWD classroom 15 3 Student | Hey. | Yo. | Don't look at me.
+
+# ---- science_class ----
+CROWD science_class 6 8 Student | Don't touch that beaker. | Smells like sulfur. | Yo.
+CROWD science_class 15 10 Student | Where's the teacher? | Hey. | Is this safe?
+CROWD science_class 2 5 Nerd | Wear your goggles. | I did the pre-lab. | Hi.
+CROWD science_class 9 2 Student | I'm not drinking that. | Sup. | Ugh.
+CROWD science_class 18 7 Student | ... | Hey. | Whatever.
+
+# ---- cafeteria ----
+CROWD cafeteria 14 1 Student | The pizza's cold. | Yo. | Pass the ketchup.
+CROWD cafeteria 21 6 Jock | Don't sit there, it's taken. | Sup. | Mine.
+CROWD cafeteria 21 10 Nerd | I brought my own lunch. | Hi. | Do you mind?
+CROWD cafeteria 6 7 Student | Hey. | ... | Mmph. Chewing.
+CROWD cafeteria 1 3 Student | Is that mystery meat? | Yo. | I'm not hungry.
+CROWD cafeteria 15 3 Freshman | Can I sit here? | Hi? | Is it always this loud?
+CROWD cafeteria 17 1 Student | Sup. | Gross. | Don't talk to me.
+CROWD cafeteria 17 10 Senior | Back in my day the food was worse. | Hm. | Hey.
+
+# ---- auditorium ----
+CROWD auditorium 2 11 Student | Are they starting yet? | Yo. | Nice crowd.
+CROWD auditorium 16 10 Student | Hey. | Sup. | I'm only here for the free pizza.
+CROWD auditorium 14 4 Student | Shh. | ... | Is this seat taken?
+CROWD auditorium 18 4 Nerd | I love live music. | Hi. | Excuse me.
+CROWD auditorium 21 6 Jock | Sup. | Where's the mosh pit? | Loud, huh.
+CROWD auditorium 15 6 Student | Hey. | Whatever. | Yo.
+
+# ---- rooftop ----
+CROWD rooftop 5 7 Student | Shh, nobody's allowed up here. | Nice view, huh. | Don't tell anyone.
+
+# ---- band_room ----
+CROWD band_room 4 8 Band Kid | We're practicing. | Don't touch the drums. | Hm?
+CROWD band_room 15 8 Student | Yo. | Are you here for the band? | Sup.
+CROWD band_room 16 3 Nerd | I'm only here for the sheet music. | Hi. | Shh, tuning.
