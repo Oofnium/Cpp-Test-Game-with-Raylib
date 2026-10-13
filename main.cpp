@@ -2163,7 +2163,7 @@ int main() {
             DrawText("(code: AGPL v3, assets: CC BY-SA 4.0)", 60, 176, 20, GRAY);
             DrawText("Characters from Goodbye Volcano High by KO_OP", 60, 210, 22, WHITE);
             DrawText("Music: credit the Snoot Game composers here", 60, 258, 22, WHITE);
-            DrawText("Made with C++ and raylib. Add your own team below!", 60, 306, 22, WHITE);
+            DrawText("Made with C++ and raylib. ReneGames", 60, 306, 22, WHITE);
             DrawText("BACKSPACE: back", 60, 390, 18, GRAY);
         }
 
