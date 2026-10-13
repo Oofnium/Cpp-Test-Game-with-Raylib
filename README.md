@@ -3,7 +3,7 @@
 A lightweight 2D game engine and narrative engine built from scratch in **C++** using the **Raylib** library[cite: 16, 20]. Designed as a modular system supporting custom script parsing, map exploration, dialogue trees with typewriter effects, and robust save/load management.
 
 ## 🚀 Features
-* **Custom Script Parser:** Interprets narrative scripts (`story_.txt`) containing scenes, choices, conditional requirements, and character expressions[cite: 21].
+* **Custom Script Parser:** Interprets narrative scripts (`story.txt`) containing scenes, choices, conditional requirements, and character expressions[cite: 21].
 * **Tile-Based World System:** Grid-based movement, collision detection, and map-to-map transitions (`world.txt`)[cite: 16].
 * **State & Narrative Management:** Tracks player stats, choices, and story progression flags independently from rendering logic (`SnootEngine.h`, `Narrative.cpp`)[cite: 17, 20].
 * **Save/Load System:** Supports automated checkpoints, manual save slots, and persistent settings.
